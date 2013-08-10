@@ -124,6 +124,9 @@ def run():
 def debug():
     subprocess.call( [ PYTHON, "lredit_main.py", "--multi", "--debug" ] )
 
+def debug_bigfile():
+    subprocess.call( [ PYTHON, "lredit_main.py", "--multi", "--debug", "c:/Users/tom/Desktop/big_file.txt" ] )
+
 def profile():
     subprocess.call( [ PYTHON, "lredit_main.py", "--multi", "--debug", "--profile" ] )
 
