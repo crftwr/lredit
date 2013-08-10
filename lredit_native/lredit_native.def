@@ -1,0 +1,3 @@
+LIBRARY lredit_native.pyd
+EXPORTS
+initlredit_native@0

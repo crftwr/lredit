@@ -1,0 +1,5 @@
+zenhan-py
+
+Converter between Full-width Japanese and Half-width Japanese
+http://code.google.com/p/zenhan-py/
+
