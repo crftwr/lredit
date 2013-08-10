@@ -3720,7 +3720,12 @@ class MainWindow( ckit.Window ):
 
     def startup( self, args ):
         print( lredit_resource.startupString() )
-        self.processArgument(args)
+
+        if self.profile:
+            cProfile.runctx( "self.processArgument(args)", globals(), locals() )
+        else:
+            self.processArgument(args)
+
 
     #--------------------------------------------------------
     # ここから下のメソッドはキーに割り当てることができる

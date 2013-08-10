@@ -130,6 +130,9 @@ def debug_bigfile():
 def profile():
     subprocess.call( [ PYTHON, "lredit_main.py", "--multi", "--debug", "--profile" ] )
 
+def profile_bigfile():
+    subprocess.call( [ PYTHON, "lredit_main.py", "--multi", "--debug", "--profile", "c:/Users/tom/Desktop/big_file.txt" ] )
+
 if len(sys.argv)<=1:
     target = "all"
 else:
