@@ -5907,6 +5907,8 @@ class MainWindow( ckit.Window ):
             edit.search( search_object=search_object, direction=1, select=False, hitmark=False )
         if isinstance( position, int ):
             point = edit.point(position-1)
+            point = max( point, edit.pointDocumentBegin() )
+            point = min( point, edit.pointDocumentEnd() )
             edit.setCursor( point, make_visible=False, paint=False )
             edit.makeVisible( point, jump_mode=True )
         else:
