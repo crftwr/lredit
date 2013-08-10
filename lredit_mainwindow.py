@@ -5795,7 +5795,7 @@ class MainWindow( ckit.Window ):
 
         self.setProgressValue(None)
         try:
-            self.subThreadCall( tags.parse, (), cancel )
+            self.subThreadCall( tags.parse, (), cancel, raise_error=True )
         finally:
             self.clearProgress()
 
