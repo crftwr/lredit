@@ -5175,7 +5175,7 @@ class MainWindow( ckit.Window ):
 
             def onFound( filename, lineno, line ):
 
-                path_from_here = ckit.normPath(filename[len(os.path.join(location,"")):])
+                path_from_here = ckit.normPath( os.path.relpath( filename, location ) )
                 text = "%s:%d: %s" % ( path_from_here, lineno, line.strip() )
                 print( text )
 
