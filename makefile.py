@@ -12,13 +12,11 @@ sys.path[0:0] = [
 import lredit_resource
 
 DIST_DIR = "dist/lredit"
-DIST_SRC_DIR = "dist/src"
 VERSION = lredit_resource.lredit_version.replace(".","")
 ARCHIVE_NAME = "lredit_%s.zip" % VERSION
 
 PYTHON_DIR = "c:/python33"
 PYTHON = PYTHON_DIR + "/python.exe"
-GIT_DIR = "c:/Program Files (x86)/Git/bin"
 DOXYGEN_DIR = "c:/Program Files/doxygen"
 
 def unlink(filename):
@@ -66,7 +64,6 @@ DIST_FILES = [
     "lredit/theme/white",
     "lredit/license",
     "lredit/doc",
-    "lredit/src.zip",
     "lredit/dict/.keepme",
     "lredit/extension/.keepme",
     ]
@@ -77,17 +74,6 @@ def all():
 
 def exe():
     subprocess.call( [ PYTHON, "setup.py", "build" ] )
-
-    if 0:
-        rmtree( DIST_SRC_DIR )
-        makedirs( DIST_SRC_DIR )
-        os.chdir(DIST_SRC_DIR)
-        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../ckit" ] )
-        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../pyauto" ] )
-        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../lredit" ] )
-        os.chdir("..")
-        createZip( "lredit/src.zip", [ "src" ] )
-        os.chdir("..")
 
     if 1:
         os.chdir("dist")
