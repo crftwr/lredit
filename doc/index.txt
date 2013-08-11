@@ -206,8 +206,8 @@
          python33.dll      Pythonランタイムライブラリ
          library.zip       スクリプトが格納されているアーカイブ
          _config.py        デフォルト設定ファイル
-         readme.txt        最初に読む文書
-         src.zip           ソースコード
+         readme_en.txt     最初に読む文書 (英語)
+         readme_ja.txt     最初に読む文書 (日本語)
          lib/              DLLが格納されているディレクトリ
          extension/        ユーザサイドのスクリプトを入れるディレクトリ
          theme/            テーマのデータが格納されているディレクトリ

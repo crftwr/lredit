@@ -18,7 +18,7 @@ ARCHIVE_NAME = "lredit_%s.zip" % VERSION
 
 PYTHON_DIR = "c:/python33"
 PYTHON = PYTHON_DIR + "/python.exe"
-SVN_DIR = "c:/Program Files/TortoiseSVN/bin"
+GIT_DIR = "c:/Program Files (x86)/Git/bin"
 DOXYGEN_DIR = "c:/Program Files/doxygen"
 
 def unlink(filename):
@@ -78,13 +78,13 @@ def all():
 def exe():
     subprocess.call( [ PYTHON, "setup.py", "build" ] )
 
-    if 1:
+    if 0:
         rmtree( DIST_SRC_DIR )
         makedirs( DIST_SRC_DIR )
         os.chdir(DIST_SRC_DIR)
-        subprocess.call( [ SVN_DIR + "/svn.exe", "export", "--force", "../../../ckit" ] )
-        subprocess.call( [ SVN_DIR + "/svn.exe", "export", "--force", "../../../pyauto" ] )
-        subprocess.call( [ SVN_DIR + "/svn.exe", "export", "--force", "../../../lredit" ] )
+        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../ckit" ] )
+        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../pyauto" ] )
+        #subprocess.call( [ GIT_DIR + "/git.exe", "export", "--force", "../../../lredit" ] )
         os.chdir("..")
         createZip( "lredit/src.zip", [ "src" ] )
         os.chdir("..")
