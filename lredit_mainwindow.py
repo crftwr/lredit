@@ -2777,6 +2777,7 @@ class MainWindow( ckit.Window ):
 
         self.paint( REGION_EDIT )
         self.updateTitleBar()
+        self.updateTabBar()
 
         return True
 
