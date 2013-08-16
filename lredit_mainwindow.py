@@ -116,7 +116,7 @@ class GrepJumpItem(JumpItem):
             if self.lineno>=old_right:
                 self.lineno += new_right-old_right
                 return True
-            elif self.lineno<new_right:
+            elif self.lineno>new_right:
                 self.lineno = new_right
                 return True
         return False
@@ -153,14 +153,14 @@ class CompareJumpItem(JumpItem):
             if self.lineno1>=old_right:
                 self.lineno1 += new_right-old_right
                 return True
-            elif self.lineno1<new_right:
+            elif self.lineno1>new_right:
                 self.lineno1 = new_right
                 return True
         if self.filename2==filename and self.lineno2>left:
             if self.lineno2>=old_right:
                 self.lineno2 += new_right-old_right
                 return True
-            elif self.lineno2<new_right:
+            elif self.lineno2>new_right:
                 self.lineno2 = new_right
                 return True
         return False
