@@ -57,7 +57,14 @@ if 1:
             else:
                 line = 1
                 index = 1
-            text_list.append( ( item[0], line, index ) )
+            text_list.append( ( os.path.abspath(item[0]), line, index ) )
+
+    if args.project:
+        args.project = [ os.path.abspath(filename) for filename in args.project ]
+    if args.compare:
+        args.compare = [ os.path.abspath(filename) for filename in args.compare ]
+    if args.file:
+        args.file = [ os.path.abspath(filename) for filename in args.file ]
 
     arg_data = {}
     arg_data["readonly"] = args.readonly
