@@ -139,6 +139,29 @@ def configure(window):
 
 
     #----------------------------------------------
+    # line filtering tool
+
+    # remove continuing overlapped lines
+    def command_Unique(info):
+
+        edit = window.activePane().edit
+
+        previous_line = [None]
+        def func( text, info ):
+            if previous_line[0]==text:
+                return False
+            else:
+                previous_line[0]=text
+                return True
+
+        edit.filterLines(func)
+
+    window.launcher.command_list += [
+        ( "Unique",  command_Unique ),
+    ]
+
+
+    #----------------------------------------------
     # association between filename pattern and mode
 
     window.fileext_list = [
