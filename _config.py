@@ -139,7 +139,7 @@ def configure(window):
 
 
     #----------------------------------------------
-    # line filtering tool
+    # misc tools
 
     # remove continuing overlapped lines
     def command_Unique(info):
@@ -156,8 +156,31 @@ def configure(window):
 
         edit.filterLines(func)
 
+    # search by previous condition and bookmark the found lines
+    def command_SearchAndBookmark(info):
+
+        if not window.search_object: return
+
+        edit = window.activePane().edit
+        point = edit.pointDocumentBegin()
+        count = 0
+        
+        while point:
+            point = edit.search( search_object=window.search_object, point=point, direction=1, move_cursor=False, select=False, hitmark=False, paint=False, message=False )
+            if point:
+                edit.bookmark( point.line, [ 1 ], paint=False )
+                point.line += 1
+                point.index = 0
+                count += 1
+        
+        msg = "found %d lines" % ( count )
+        window.setStatusMessage( msg, 3000 )
+
+        window.paint()
+
     window.launcher.command_list += [
-        ( "Unique",  command_Unique ),
+        ( "Unique",             command_Unique ),
+        ( "SearchAndBookmark",  command_SearchAndBookmark ),
     ]
 
 
