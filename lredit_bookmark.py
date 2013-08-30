@@ -32,6 +32,7 @@ class BookmarkTable:
     def setBookmarkList( self, filename, bookmark_list ):
 
         filename = os.path.normpath(filename)
+        filename_lower = filename.lower()
         
         bookmark_list2 = []
         for bookmark in bookmark_list:
@@ -41,7 +42,7 @@ class BookmarkTable:
         bookmark_list = bookmark_list2
         
         for i, item in enumerate(self.table):
-            if item[0] == filename:
+            if item[0].lower() == filename_lower:
                 if bookmark_list:
                     item[1] = bookmark_list
                 else:
@@ -57,10 +58,12 @@ class BookmarkTable:
     def setBookmark( self, filename, bookmark ):
         
         filename = os.path.normpath(filename)
+        filename_lower = filename.lower()
+
         bookmark = ( bookmark[0], bookmark[1], self._shrinkText(bookmark[2]) )
         
         for item in self.table:
-            if item[0] == filename:
+            if item[0].lower() == filename_lower:
                 for i, b in enumerate(item[1]):
                     if b[0] == bookmark[0]:
                         if bookmark[1]:
@@ -87,9 +90,10 @@ class BookmarkTable:
     def getBookmarkList( self, filename ):
 
         filename = os.path.normpath(filename)
+        filename_lower = filename.lower()
         
         for item in self.table:
-            if item[0] == filename:
+            if item[0].lower() == filename_lower:
                 return item[1]
         return []
 
