@@ -331,6 +331,7 @@
         PageUp/PageDown                               ページ単位スクロール
         Home/End                                      行頭/行末へ移動
         Alt + ↑/↓                                   ブックマークか変更行へ移動
+        Alt + Shift + ↑/↓                           ブックマークか変更行まで範囲選択
         Ctrl + Home/End                               文書の先頭/末尾へ移動
         Ctrl + L                                      現在のカーソル位置を中央に表示
         Shift + ↑/↓/←/→                           範囲選択

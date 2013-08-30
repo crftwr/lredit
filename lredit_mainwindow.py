@@ -2269,8 +2269,8 @@ class MainWindow( ckit.Window ):
                         ckit.MenuNode( "bookmark1",        ckit.strings["menu_bookmark1"],     self.command.Bookmark1 ),
                         ckit.MenuNode( "bookmark2",        ckit.strings["menu_bookmark2"],     self.command.Bookmark2 ),
                         ckit.MenuNode( "bookmark3",        ckit.strings["menu_bookmark3"],     self.command.Bookmark3 ),
-                        ckit.MenuNode( "bookmark_next",    ckit.strings["menu_bookmark_next"], self.command.SeekBookmarkNext ),
-                        ckit.MenuNode( "bookmark_prev",    ckit.strings["menu_bookmark_prev"], self.command.SeekBookmarkPrev ),
+                        ckit.MenuNode( "bookmark_next",    ckit.strings["menu_bookmark_next"], self.command.CursorBookmarkNext ),
+                        ckit.MenuNode( "bookmark_prev",    ckit.strings["menu_bookmark_prev"], self.command.CursorBookmarkPrev ),
                         ckit.MenuNode( separator=True ),
                         ckit.MenuNode( "outline",          ckit.strings["menu_outline"],       self.command.Outline ),
                         ckit.MenuNode( separator=True ),
@@ -3263,8 +3263,10 @@ class MainWindow( ckit.Window ):
         self.keymap[ "Down" ] = self.command.CursorDown
         self.keymap[ "PageUp" ] = self.command.CursorPageUp
         self.keymap[ "PageDown" ] = self.command.CursorPageDown
-        self.keymap[ "A-Up" ] = self.command.SeekModifiedOrBookmarkPrev
-        self.keymap[ "A-Down" ] = self.command.SeekModifiedOrBookmarkNext
+        self.keymap[ "A-Up" ] = self.command.CursorModifiedOrBookmarkPrev
+        self.keymap[ "A-Down" ] = self.command.CursorModifiedOrBookmarkNext
+        self.keymap[ "A-S-Up" ] = self.command.SelectModifiedOrBookmarkPrev
+        self.keymap[ "A-S-Down" ] = self.command.SelectModifiedOrBookmarkNext
         self.keymap[ "C-Home" ] = self.command.CursorDocumentBegin
         self.keymap[ "C-End" ] = self.command.CursorDocumentEnd
         self.keymap[ "C-B" ] = self.command.CursorCorrespondingBracket
