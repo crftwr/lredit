@@ -9,13 +9,16 @@ from lredit_minormode import *
 from lredit_misc import *
 from lredit_native import *
 
-## @mainpage LREdit API リファレンス
+## @mainpage User Manual
 #
-#  LREdit のカスタマイズや機能拡張をするためのリファレンスです。\n
-#  \n
-#  LREdit のオフィシャルサイトはこちらです。\n
-#  http://sites.google.com/site/craftware/lredit/ \n
-#  \n
+#  @htmlinclude index.htm_
+#
+#  @subpage changes
+#
+
+## @page changes 更新履歴
+#
+#  @htmlinclude changes.htm_
 #
 
 ## @addtogroup mainwindow メインウインドウ機能
