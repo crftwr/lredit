@@ -5019,90 +5019,113 @@ class MainWindow( ckit.Window ):
     ## 複数のファイルから文字列を検索する
     def command_Grep( self, info ):
 
-        target_list = [
-            "Directory",
-            "Directory.Recursive",
-            "Project",
-        ]
+        # 検索する文字列
+        keyword = ""
+        if self.search_history.items:
+            keyword = self.search_history.items[0]
+        
+        # 検索オプション
+        word = bool(self.ini.getint( "SEARCH", "word" ))
+        case = bool(self.ini.getint( "SEARCH", "case" ))
+        regex = bool(self.ini.getint( "SEARCH", "regex" ))
 
-        def candidate_GrepTarget( update_info ):
-
-            candidates = []
-
-            for target in target_list:
-                if target.lower().startswith( update_info.text.lower() ):
-                    candidates.append( target )
-
-            return candidates, 0
-
-        mod = 0
-
-        # デフォルトのファイル名パターン
+        # ファイル名パターン
         filename_pattern = ""
         if self.grep_filename_pattern_history.items : filename_pattern = self.grep_filename_pattern_history.items[0]
 
-        # デフォルトのディレクトリ
-        location = self.activeEditPane().edit.doc.getFullpath()
-        if self.grep_location_history.items : location = self.grep_location_history.items[0]
-
-        # デフォルトの検索対象 (プロジェクト、ディレクトリ)
+        # 検索対象 (プロジェクト、ディレクトリ)
+        target_list = ( "Project", "Directory" )
         target = self.ini.get( "GREP", "target" )
-        if not target : target = "Directory.Recursive"
+        if not self.project or target not in target_list: target = "Directory"
 
-        # デフォルトの無視するディレクトリ名パターン
+        # ディレクトリ
+        location = self.activeEditPane().edit.doc.getFullpath()
+        if location:
+            location = os.path.dirname(location)
+            location = ckit.joinPath(location,"")
+        else:
+            location = ""
+
+        # 前回使用したディレクトリが編集中のファイルパスを含んでいたら前回のディレクトリを使う
+        if self.grep_location_history.items:
+            prev_location = self.grep_location_history.items[0]
+            if location.startswith(prev_location) or not location:
+                location = prev_location
+
+        # 無視するディレクトリ名パターン
         dirname_exclude_pattern = ""
         if self.grep_dirname_exclude_pattern_history.items : dirname_exclude_pattern = self.grep_dirname_exclude_pattern_history.items[0]
 
-        # 検索文字列の入力
-        s, mod = self.inputSearch( "Grep Keyword", return_modkey=True )
-        if s==None : return
+        # 再帰的に検索するか
+        recursive = bool(self.ini.get( "GREP", "recursive" ))
 
-        # ファイル名パターンの入力
-        if mod != MODKEY_CTRL:
-            filename_pattern, mod = self.commandLine( "Grep Filename", text=filename_pattern, auto_complete=False, autofix_list=[";"," ","."], return_modkey=True, candidate_handler=self.grep_filename_pattern_history.candidateHandler, candidate_remove_handler=self.grep_filename_pattern_history.candidateRemoveHandler )
-            if not filename_pattern : return
-            self.grep_filename_pattern_history.append(filename_pattern)
 
-        # 検索対象の入力
-        if mod != MODKEY_CTRL:
-            target, mod = self.commandLine( "Grep Target", text=target, auto_complete=True, autofix_list=["."], return_modkey=True, candidate_handler=candidate_GrepTarget )
-            if not target : return
-            if target not in target_list:
-                print( ckit.strings["error_unknown_parameter"] % target )
-                return
-            self.ini.set( "GREP", "target", target )
+        def isTargetDirectory(dialog):
+            return dialog.getValueById("target")==1
+
+        dialog = ckit.Dialog( self, "Grep", items=[
+
+            ckit.Dialog.Edit( "keyword", 0, 70, "Keyword", keyword, candidate_handler=self.search_history.candidateHandler, candidate_remove_handler=self.search_history.candidateRemoveHandler ),
+
+            ckit.Dialog.StaticText(0,""),
+            ckit.Dialog.CheckBox( "word", 9, "Word", word ),
+            ckit.Dialog.CheckBox( "case", 9, "Case", case ),
+            ckit.Dialog.CheckBox( "regex", 9, "Regex", regex ),
+
+            ckit.Dialog.StaticText(0,""),
+            ckit.Dialog.Edit( "filename", 0, 70, "Filename", filename_pattern, autofix_list=[" ","."], candidate_handler=self.grep_filename_pattern_history.candidateHandler, candidate_remove_handler=self.grep_filename_pattern_history.candidateRemoveHandler ),
+
+            ckit.Dialog.StaticText(0,""),
+            ckit.Dialog.Choice( "target", 0, "Target", target_list, target_list.index(target) ),
+
+            ckit.Dialog.StaticText( 0, "", visible=isTargetDirectory),
+            ckit.Dialog.Edit( "directory", 4, 66, "Location", location, autofix_list=["\\/","."], candidate_handler=lredit_commandline.candidate_Filename( ".", self.grep_location_history.items ), candidate_remove_handler=self.grep_location_history.candidateRemoveHandler, visible=isTargetDirectory ),
+
+            ckit.Dialog.StaticText( 0, "", visible=isTargetDirectory),
+            ckit.Dialog.Edit( "exclude", 4, 66, "Dirname Exclude", dirname_exclude_pattern, autofix_list=[" ","."], candidate_handler=self.grep_dirname_exclude_pattern_history.candidateHandler, candidate_remove_handler=self.grep_dirname_exclude_pattern_history.candidateRemoveHandler, visible=isTargetDirectory ),
+
+            ckit.Dialog.StaticText( 0, "", visible=isTargetDirectory),
+            ckit.Dialog.CheckBox( "recursive", 4, "Recursive", recursive, visible=isTargetDirectory ),
+
+        ])
+        
+        self.enable(False)
+        dialog.messageLoop()
+        result, values = dialog.getResult()
+        self.enable(True)
+        self.activate()
+        dialog.destroy()
+        
+        keyword = values["keyword"]
+        word = values["word"]
+        case = values["case"]
+        regex = values["regex"]
+        filename_pattern = values["filename"]
+        target = target_list[ values["target"] ]
+        location = values["directory"]
+        dirname_exclude_pattern = values["exclude"]
+        recursive = values["recursive"]
+
+        self.search_history.append(keyword)
+        self.ini.set( "SEARCH", "word", str(int(word)) )
+        self.ini.set( "SEARCH", "case", str(int(case)) )
+        self.ini.set( "SEARCH", "regex", str(int(regex)) )
+        self.grep_filename_pattern_history.append(filename_pattern)
+        self.ini.set( "GREP", "target", target )
+        self.grep_location_history.append(location)
+        self.grep_dirname_exclude_pattern_history.append(dirname_exclude_pattern)
+        self.ini.set( "GREP", "recursive", str(int(recursive)) )
+
+        if result != ckit.Dialog.RESULT_OK:
+            return
 
         # ターゲットが "Project" で、プロジェクトがオープンされていなかったらエラー
-        if target.startswith("Project") and not self.project:
+        if target=="Project" and not self.project:
             self.setStatusMessage( ckit.strings["project_not_opened"], 3000, error=True, log=True )
             return
 
-        # ディレクトリ名の入力
-        if target.startswith("Directory") and mod != MODKEY_CTRL:
-
-            default_location = location
-
-            # 編集中のファイルパス
-            location = self.activeEditPane().edit.doc.getFullpath()
-            if location:
-                location = os.path.dirname(location)
-                location = ckit.joinPath(location,"")
-
-                # 前回使用したディレクトリが編集中のファイルパスを含んでいたら前回のディレクトリを使う
-                if location.startswith(default_location):
-                    location = default_location
-
-            location, tmp, mod = self.inputDirname( "Grep Location", location, None, self.grep_location_history, return_modkey=True )
-            if location==None : return
-
-        # 無視するディレクトリ名パターンの入力
-        if target.startswith("Directory") and mod != MODKEY_CTRL:
-            dirname_exclude_pattern, mod = self.commandLine( "Grep Dirname Exclude", text=dirname_exclude_pattern, auto_complete=False, autofix_list=[";"," ","."], return_modkey=True, candidate_handler=self.grep_dirname_exclude_pattern_history.candidateHandler, candidate_remove_handler=self.grep_dirname_exclude_pattern_history.candidateRemoveHandler )
-            if dirname_exclude_pattern==None : return
-            self.grep_dirname_exclude_pattern_history.append(dirname_exclude_pattern)
-
         # ターゲットが "Project" のときは、ログ出力の相対パスはプロジェクトファイルの場所から表示
-        if target.startswith("Project"):
+        if target_list == "Project":
             location = self.project.dirname
 
         # 保存確認
@@ -5110,19 +5133,14 @@ class MainWindow( ckit.Window ):
         if result==None:
             return
 
-        word = self.ini.getint( "SEARCH", "word" )
-        case = self.ini.getint( "SEARCH", "case" )
-        regex = self.ini.getint( "SEARCH", "regex" )
-
         try:
-            search_object = ckit.Search( s, word, case, regex )
+            search_object = ckit.Search( keyword, word, case, regex )
         except re.error:
-            self.setStatusMessage( ckit.strings["statusbar_regex_wrong"] % s, 3000, error=True )
+            self.setStatusMessage( ckit.strings["statusbar_regex_wrong"] % keyword, 3000, error=True )
             return
 
         def enumFiles():
 
-            target_split = target.split(".")
             file_filter_list = filename_pattern.split(" ")
 
             def checkFilter(filename):
@@ -5137,14 +5155,9 @@ class MainWindow( ckit.Window ):
                             result = True
                 return result
 
-            if target_split[0]=="Directory":
+            if target=="Directory":
 
-                if len(target_split)<=1:
-                    recursive = False
-                elif target_split[1]=="Recursive":
-                    recursive = True
-
-                print( 'Grep : %s : %s : %s' % ( target, location, s ) )
+                print( 'Grep : %s : %s : %s' % ( target, location, keyword ) )
 
                 dir_ignore_list = dirname_exclude_pattern.split(" ")
 
@@ -5164,9 +5177,9 @@ class MainWindow( ckit.Window ):
                             fullpath = os.path.join( root, filename )
                             yield fullpath
 
-            elif target_split[0]=="Project":
+            elif target=="Project":
 
-                print( 'Grep : %s : %s' % (target,s) )
+                print( 'Grep : %s : %s' % (target,keyword) )
 
                 for filename in self.project.enumFullpath():
                     if checkFilter(filename):
@@ -5199,7 +5212,7 @@ class MainWindow( ckit.Window ):
 
             self.setProgressValue(None)
             try:
-                lredit_grep.grep( job_item, enumFiles, s, word, case, regex, found_handler=onFound )
+                lredit_grep.grep( job_item, enumFiles, keyword, word, case, regex, found_handler=onFound )
             finally:
                 self.clearProgress()
 

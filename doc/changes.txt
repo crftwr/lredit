@@ -2,6 +2,10 @@
 更新履歴
 =========
 
+    1.74
+
+        - Grep のパラメタを、コマンドラインではなくダイアログで入力するようにした。
+
     1.73
 
         - SeekModifiedLineNext などの SeekXxxx 系コマンドの名前を、CursorXxxx に変名。
