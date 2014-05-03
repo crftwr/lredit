@@ -4145,7 +4145,7 @@ class MainWindow( ckit.Window ):
             if not filename : return
 
         self.ini.set( "WALLPAPER", "visible", "1" )
-        self.ini.set( "WALLPAPER", "filename", filename.encode("utf8") )
+        self.ini.set( "WALLPAPER", "filename", filename )
         self.updateWallpaper()
 
     ## 設定メニューをポップアップする

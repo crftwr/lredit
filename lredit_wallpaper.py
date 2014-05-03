@@ -72,10 +72,10 @@ class Wallpaper:
 
             if wallpaper_ratio > client_rect_ratio:
                 crop_width = int(self.pil_image.size[1] * client_rect_ratio)
-                self.crop_rect = ( (self.pil_image.size[0]-crop_width)/2, 0, (self.pil_image.size[0]-crop_width)/2+crop_width, self.pil_image.size[1] )
+                self.crop_rect = ( (self.pil_image.size[0]-crop_width)//2, 0, (self.pil_image.size[0]-crop_width)//2+crop_width, self.pil_image.size[1] )
             else:
                 crop_height = int(self.pil_image.size[0] / client_rect_ratio)
-                self.crop_rect = ( 0, (self.pil_image.size[1]-crop_height)/2, self.pil_image.size[0], (self.pil_image.size[1]-crop_height)/2+crop_height )
+                self.crop_rect = ( 0, (self.pil_image.size[1]-crop_height)//2, self.pil_image.size[0], (self.pil_image.size[1]-crop_height)//2+crop_height )
         except:
             self.crop_rect = (0,0,self.pil_image.size[0],self.pil_image.size[1])
 

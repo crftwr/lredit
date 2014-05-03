@@ -6,6 +6,8 @@
 
         - Grep のパラメタを、コマンドラインではなくダイアログで入力するようにした。
 
+        - Python33 に移行したときから、壁紙機能が機能しなくなっていたのを修正。
+
     1.73
 
         - SeekModifiedLineNext などの SeekXxxx 系コマンドの名前を、CursorXxxx に変名。
