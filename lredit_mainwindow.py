@@ -3579,8 +3579,6 @@ class MainWindow( ckit.Window ):
             self.ini.set( "MISC", "drive_case", "nocare" )
         if not self.ini.has_option( "MISC", "app_name" ):
             self.ini.set( "MISC", "app_name", "LREdit" )
-        if not self.ini.has_option( "MISC", "walkaround_kb436093" ):
-            self.ini.set( "MISC", "walkaround_kb436093", "0" )
 
         if not self.ini.has_option( "DEBUG", "detect_block" ):
             self.ini.set( "DEBUG", "detect_block", "0" )
@@ -3603,8 +3601,6 @@ class MainWindow( ckit.Window ):
             ckit.setPathDriveUpper(False)
         else:
             ckit.setPathDriveUpper(None)
-
-        ckit.setGlobalOption( GLOBAL_OPTION_WALKAROUND_KB436093, int(self.ini.get( "MISC", "walkaround_kb436093" )) )
 
         lredit_resource.lredit_appname = self.ini.get( "MISC", "app_name" )
         lredit_resource.setLocale( self.ini.get( "MISC", "locale" ) )

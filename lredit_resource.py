@@ -123,9 +123,6 @@ strings_ja = {
     "drive_case_nocare"             : "気にしない",
     "drive_case_upper"              : "大文字",
     "drive_case_lower"              : "小文字",
-    "avoid_winxp_render_problem"    : "WindowsXPの描画問題を回避",
-    "avoid_winxp_render_problem_no" : "しない (推奨)",
-    "avoid_winxp_render_problem_yes": "する (再描画がすこし低速になります)",
     "edit_config"                   : "config.py を編集",
     "reload_config"                 : "config.py を再読み込み",
     
@@ -294,9 +291,6 @@ strings_en = {
     "drive_case_nocare"             : "Don't care",
     "drive_case_upper"              : "Upper case",
     "drive_case_lower"              : "Lower case",
-    "avoid_winxp_render_problem"    : "Avoid WindowsXP's rendering problem",
-    "avoid_winxp_render_problem_no" : "No  (Recommended)",
-    "avoid_winxp_render_problem_yes": "Yes (Rendering speed will be slower)",
     "edit_config"                   : "Edit config.py",
     "reload_config"                 : "Reload config.py",
 

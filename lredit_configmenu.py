@@ -455,45 +455,6 @@ def _configOperation( main_window ):
         items[select][1]( main_window )
 
 
-def _configWalkaroundKB436093( main_window ):
-
-    items = []
-
-    items.append( ( ckit.strings["avoid_winxp_render_problem_no"], "0" ) )
-    items.append( ( ckit.strings["avoid_winxp_render_problem_yes"], "1" ) )
-
-    walkaround_kb436093 = main_window.ini.get( "MISC", "walkaround_kb436093" )
-
-    initial_select = 0
-    for i in range(len(items)):
-        if items[i][1]==walkaround_kb436093:
-            initial_select = i
-            break
-
-    select = lredit_listwindow.popMenu( main_window, ckit.strings["avoid_winxp_render_problem"], items, initial_select )
-    if select<0 : return
-
-    main_window.ini.set( "MISC", "walkaround_kb436093", items[select][1] )
-    
-    ckit.setGlobalOption( GLOBAL_OPTION_WALKAROUND_KB436093, int(items[select][1]) )
-
-
-def _configOthers( main_window ):
-
-    select = 0
-    
-    while True:
-
-        items = []
-
-        items.append( ( ckit.strings["avoid_winxp_render_problem"], _configWalkaroundKB436093 ) )
-
-        select = lredit_listwindow.popMenu( main_window, ckit.strings["misc_option"], items, select )
-        if select<0 : return
-
-        items[select][1]( main_window )
-
-
 def doConfigMenu( main_window ):
 
     select = 0
@@ -504,7 +465,6 @@ def doConfigMenu( main_window ):
 
         items.append( ( ckit.strings["display_option"], _configAppearance ) )
         items.append( ( ckit.strings["operation_option"], _configOperation ) )
-        items.append( ( ckit.strings["misc_option"], _configOthers ) )
         items.append( ( ckit.strings["edit_config"], _editConfigFile ) )
         items.append( ( ckit.strings["reload_config"], _reloadConfigFile ) )
 

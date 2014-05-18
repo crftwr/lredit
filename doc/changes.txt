@@ -2,6 +2,12 @@
 更新履歴
 =========
 
+    ?.??
+
+        - Python33 から Python34 に移行
+
+        - WindowsXP の 描画問題 (http://support.microsoft.com/kb/436093/ja) の対処を廃止
+
     1.74
 
         - Grep のパラメタを、コマンドラインではなくダイアログで入力するようにした。
