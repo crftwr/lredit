@@ -6,6 +6,8 @@
 
         - Python33 から Python34 に移行
 
+        - Grep の ヒット件数がステータスバーに表示されるのを 3 秒で消すようにした。
+
         - WindowsXP の 描画問題 (http://support.microsoft.com/kb/436093/ja) の対処を廃止
 
     1.74

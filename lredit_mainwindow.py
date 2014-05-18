@@ -5217,7 +5217,7 @@ class MainWindow( ckit.Window ):
             if job_item.isCanceled():
                 self.setStatusMessage( ckit.strings["statusbar_aborted"], 3000 )
             else:
-                self.setStatusMessage( ckit.strings["statusbar_grep_finished"] % len(jump_list) )
+                self.setStatusMessage( ckit.strings["statusbar_grep_finished"] % len(jump_list), 3000 )
 
             if self.jump_selection==None:
                 self.command.SearchResultNext()
