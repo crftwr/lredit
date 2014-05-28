@@ -10,6 +10,8 @@
 
         - WindowsXP の 描画問題 (http://support.microsoft.com/kb/436093/ja) の対処を廃止
 
+        - ckit.Window の代わりに ckit.TextWindow を使うようにした。(ckitの設計変更に追従)
+
     1.74
 
         - Grep のパラメタを、コマンドラインではなくダイアログで入力するようにした。
