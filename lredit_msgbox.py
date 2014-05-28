@@ -3,7 +3,6 @@
 import ckit
 from ckit.ckit_const import *
 
-import lredit_wallpaper
 import lredit_resource
 
 
@@ -79,7 +78,7 @@ class MessageBox( ckit.TextWindow ):
         self.result_mod = 0
 
         try:
-            self.wallpaper = lredit_wallpaper.Wallpaper(self)
+            self.wallpaper = ckit.Wallpaper(self)
             self.wallpaper.copy( parent_window )
             self.wallpaper.adjust()
         except:

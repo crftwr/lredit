@@ -21,7 +21,6 @@ lredit_resource.py
 lredit_statusbar.py
 lredit_tabbar.py
 lredit_tags.py
-lredit_wallpaper.py
 lredit_zenhan.py
 
 lredit_native/lredit_native.cpp

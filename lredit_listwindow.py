@@ -8,7 +8,6 @@ from ckit.ckit_const import *
 import lredit_isearch
 import lredit_statusbar
 import lredit_misc
-import lredit_wallpaper
 
 ## @addtogroup listwindow
 ## @{
@@ -153,7 +152,7 @@ class ListWindow( ckit.TextWindow ):
 
     def updateWallpaper(self):
         try:
-            self.wallpaper = lredit_wallpaper.Wallpaper(self)
+            self.wallpaper = ckit.Wallpaper(self)
             self.wallpaper.copy( self.parent_window )
             self.wallpaper.adjust()
         except:

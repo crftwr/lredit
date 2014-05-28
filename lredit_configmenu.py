@@ -6,7 +6,6 @@ import ckit
 from ckit.ckit_const import *
 
 import lredit_listwindow
-import lredit_wallpaper
 import lredit_resource
 
 #--------------------------------------------------------------------
@@ -215,7 +214,7 @@ def _configAppName( main_window ):
             self.edit = ckit.EditWidget( self, 22, 1, self.width()-24, 1, app_name, [0,len(app_name)] )
 
             try:
-                self.wallpaper = lredit_wallpaper.Wallpaper(self)
+                self.wallpaper = ckit.Wallpaper(self)
                 self.wallpaper.copy( parent_window )
                 self.wallpaper.adjust()
             except:

@@ -33,7 +33,6 @@ import lredit_listwindow
 import lredit_configmenu
 import lredit_commandline
 import lredit_history
-import lredit_wallpaper
 import lredit_misc
 import lredit_native
 import lredit_resource
@@ -3063,7 +3062,7 @@ class MainWindow( ckit.TextWindow ):
                 return
 
             destroyWallpaper()
-            self.wallpaper = lredit_wallpaper.Wallpaper(self)
+            self.wallpaper = ckit.Wallpaper(self)
             try:
                 self.wallpaper.load(filename,strength)
             except:
