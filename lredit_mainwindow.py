@@ -200,7 +200,7 @@ REGION_ALL                  = 0xffffffff
 #  テキストエディタの主な機能を実現しているクラスです。\n\n
 #  設定ファイル config.py の configure に渡される window 引数は、MainWindow クラスのオブジェクトです。
 #
-class MainWindow( ckit.Window ):
+class MainWindow( ckit.TextWindow ):
 
     FOCUS_EDIT = 0
     FOCUS_LOG = 1
@@ -226,7 +226,7 @@ class MainWindow( ckit.Window ):
 
         self.title = ""
 
-        ckit.Window.__init__(
+        ckit.TextWindow.__init__(
             self,
             x=self.ini.getint( "GEOMETRY", "x" ),
             y=self.ini.getint( "GEOMETRY", "y" ),
@@ -392,7 +392,7 @@ class MainWindow( ckit.Window ):
     ## 破棄する
     def destroy(self):
         lredit_debug.disableBlockDetector()
-        ckit.Window.destroy(self)
+        ckit.TextWindow.destroy(self)
 
     ## メッセージループを処理する
     def messageLoop( self, continue_cond_func=None, name=None ):
@@ -404,7 +404,7 @@ class MainWindow( ckit.Window ):
                     return False
                 return True
             continue_cond_func = defaultLoopCond
-        ckit.Window.messageLoop( self, continue_cond_func )
+        ckit.TextWindow.messageLoop( self, continue_cond_func )
         self.messageloop_list.remove(name)
 
     ## メッセージループを抜ける

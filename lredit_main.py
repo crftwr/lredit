@@ -108,7 +108,7 @@ def sendIpc(wnd):
     print( "another lredit instance already exists." )
     print( "sending Ipc data." )
 
-    ckit.Window.sendIpc( wnd.getHWND(), json.dumps(arg_data) )
+    ckit.TextWindow.sendIpc( wnd.getHWND(), json.dumps(arg_data) )
 
     print( "done." )
 
