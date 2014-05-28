@@ -8,6 +8,8 @@
 
         - Grep の ヒット件数がステータスバーに表示されるのを 3 秒で消すようにした。
 
+        - Grep ダイアログに壁紙が適用されていなかったのを修正
+
         - WindowsXP の 描画問題 (http://support.microsoft.com/kb/436093/ja) の対処を廃止
 
         - ckit.Window の代わりに ckit.TextWindow を使うようにした。(ckitの設計変更に追従)
