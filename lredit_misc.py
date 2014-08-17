@@ -9,7 +9,10 @@ def registerNetConnectionHandler(handler):
     _net_connection_handler = handler
 
 def checkNetConnection(path):
-    unc = os.path.splitunc(path)
+    if ckit.platform()=="win":
+        unc = os.path.splitunc(path)
+    else:
+        unc = [False]
     if unc[0]:
         remote_resource_name = unc[0].replace('/','\\').rstrip('\\')
         try:

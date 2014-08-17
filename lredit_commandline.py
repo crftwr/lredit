@@ -1,4 +1,5 @@
 ﻿import os
+import stat
 
 import ckit
 from ckit.ckit_const import *
@@ -41,7 +42,10 @@ class commandline_Launcher:
 
             try:
                 path = ckit.joinPath( basedir, directory )
-                unc = os.path.splitunc(path)
+                if ckit.platform()=="win":
+                    unc = os.path.splitunc(path)
+                else:
+                    unc = [False]
                 if unc[0]:
                     lredit_misc.checkNetConnection(path)
                 if unc[0] and not unc[1]:
@@ -55,7 +59,16 @@ class commandline_Launcher:
                                 else:
                                     dirname_list.append( info[0] + "\\" )
                 else:
-                    infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
+                    if ckit.platform()=="win":
+                        infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
+                    else:
+                        infolist = []
+                        for name in os.listdir(path):
+                            s = os.stat( os.path.join(path,name) )
+                            attr = 0
+                            if stat.S_ISDIR(s.st_mode): attr |= ckit.FILE_ATTRIBUTE_DIRECTORY
+                            infolist.append( (name,None,None,attr) )
+
                     for info in infolist:
                         if info[0].lower().startswith(name_prefix):
                             if info[3] & ckit.FILE_ATTRIBUTE_DIRECTORY:
@@ -424,7 +437,10 @@ class candidate_Filename():
         try:
             path = ckit.joinPath( self.basedir, directory )
             if self.relative_path or os.path.isabs(path):
-                unc = os.path.splitunc(path)
+                if ckit.platform()=="win":
+                    unc = os.path.splitunc(path)
+                else:
+                    unc = [False]
                 if unc[0]:
                     checkNetConnection(path)
                 if unc[0] and not unc[1]:
@@ -439,7 +455,16 @@ class candidate_Filename():
                                     appendCandidate( info[0] + "\\" )
 
                 else:
-                    infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
+                    if ckit.platform()=="win":
+                        infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
+                    else:
+                        infolist = []
+                        for name in os.listdir(path):
+                            s = os.stat( os.path.join(path,name) )
+                            attr = 0
+                            if stat.S_ISDIR(s.st_mode): attr |= ckit.FILE_ATTRIBUTE_DIRECTORY
+                            infolist.append( (name,None,None,attr) )
+                
                     for info in infolist:
                         if info[0].lower().startswith(name_prefix):
                             if info[3] & ckit.FILE_ATTRIBUTE_DIRECTORY:
