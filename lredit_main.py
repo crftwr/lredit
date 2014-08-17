@@ -19,7 +19,9 @@ import time
 import locale
 
 import ckit
-import pyauto
+
+if ckit.platform()=="win":
+    import pyauto
 
 import lredit_resource
 
@@ -75,8 +77,12 @@ if 1:
 
 #--------------------------------------------------------------------
 
-instance_mutex = ctypes.windll.kernel32.CreateMutexW( 0, 0, "LreditInstanceMutex" )
-instance_exists = ctypes.windll.kernel32.GetLastError()==183 # ERROR_ALREADY_EXISTS
+if ckit.platform()=="win":
+    instance_mutex = ctypes.windll.kernel32.CreateMutexW( 0, 0, "LreditInstanceMutex" )
+    instance_exists = ctypes.windll.kernel32.GetLastError()==183 # ERROR_ALREADY_EXISTS
+else:
+    instance_mutex = None
+    instance_exists = False
 
 def findExistingLreditWindow( retry=50, retry_interval=0.1 ):
     found = [None]
@@ -216,7 +222,8 @@ if __name__ == "__main__":
 
     lredit_debug.disableExitTimeout()
 
-    ctypes.windll.kernel32.CloseHandle(instance_mutex)
+    if instance_mutex:
+        ctypes.windll.kernel32.CloseHandle(instance_mutex)
 
     # スレッドが残っていても強制終了
     if not args.debug:

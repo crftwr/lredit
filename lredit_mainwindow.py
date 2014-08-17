@@ -11,12 +11,14 @@ import configparser
 import json
 import traceback
 import ctypes
-import msvcrt
 import locale
 
-import pyauto
 import ckit
 from ckit.ckit_const import *
+
+if ckit.platform()=="win":
+    import pyauto
+    import msvcrt
 
 import lredit_mode
 import lredit_minormode
@@ -3414,7 +3416,8 @@ class MainWindow( ckit.TextWindow ):
         if os.path.exists(self.ini_filename):
             try:
                 fd = open( self.ini_filename, "r", encoding="utf-8" )
-                msvcrt.locking( fd.fileno(), msvcrt.LK_LOCK, 1 )
+                if ckit.platform()=="win":
+                    msvcrt.locking( fd.fileno(), msvcrt.LK_LOCK, 1 )
                 self.ini.readfp(fd)
                 fd.close()
             except Exception as e:
@@ -3531,9 +3534,9 @@ class MainWindow( ckit.TextWindow ):
             self.ini.set( "GEOMETRY", "left_edit_pane_width", str( (self.ini.getint( "GEOMETRY", "width" )-1)//2 ) )
 
         if not self.ini.has_option( "FONT", "name" ):
-            self.ini.set( "FONT", "name", "" )
+            self.ini.set( "FONT", "name", "Osaka-Mono" ) # FIXME : OSによって変える
         if not self.ini.has_option( "FONT", "size" ):
-            self.ini.set( "FONT", "size", "12" )
+            self.ini.set( "FONT", "size", "16" )
 
         if not self.ini.has_option( "THEME", "name" ):
             self.ini.set( "THEME", "name", "black" )
@@ -3573,7 +3576,7 @@ class MainWindow( ckit.TextWindow ):
         if not self.ini.has_option( "MISC", "beep_type" ):
             self.ini.set( "MISC", "beep_type", "enabled" )
         if not self.ini.has_option( "MISC", "directory_separator" ):
-            self.ini.set( "MISC", "directory_separator", "backslash" )
+            self.ini.set( "MISC", "directory_separator", "slash" ) # FIXME : OSによって変える
         if not self.ini.has_option( "MISC", "drive_case" ):
             self.ini.set( "MISC", "drive_case", "nocare" )
         if not self.ini.has_option( "MISC", "app_name" ):
@@ -3634,7 +3637,8 @@ class MainWindow( ckit.TextWindow ):
 
             fd = open( tmp_ini_filename, "w", encoding="utf-8" )
 
-            msvcrt.locking( fd.fileno(), msvcrt.LK_LOCK, 1 )
+            if ckit.platform()=="win":
+                msvcrt.locking( fd.fileno(), msvcrt.LK_LOCK, 1 )
             self.ini.write(fd)
             fd.close()
 
