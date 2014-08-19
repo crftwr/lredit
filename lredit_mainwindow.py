@@ -3312,6 +3312,7 @@ class MainWindow( ckit.TextWindow ):
         self.keymap[ "C-N" ] = self.command.SearchNext
         self.keymap[ "C-S-N" ] = self.command.SearchPrev
         self.keymap[ "C-Space" ] = self.command.CompleteAbbrev
+        self.keymap[ "C-G" ] = self.command.CompleteAbbrev
 
         self.keymap[ "C-E" ] = self.command.ExtensionMenu
         self.keymap[ "C-M" ] = self.command.Bookmark1
