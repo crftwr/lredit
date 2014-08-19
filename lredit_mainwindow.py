@@ -5686,6 +5686,11 @@ class MainWindow( ckit.TextWindow ):
             except KeyError:
                 pass
 
+        # FIXME : タイトルバーがないウインドウをshow()するとエラーになってしまうので、とりあえずタイトルバーをつける
+        if ckit.platform()=="mac":
+            if not title:
+                title = ""
+
         list_window = lredit_listwindow.ListWindow( 0, 0, 5, 1, self.width()-5, self.height()-3, self, self.ini, False, title, items, initial_select=selection, keydown_hook=onKeyDown, onekey_search=False )
 
         if pos:
