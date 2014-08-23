@@ -7,7 +7,9 @@ from lredit_mode import *
 from lredit_lexer import *
 from lredit_minormode import *
 from lredit_misc import *
-from lredit_native import *
+
+if ckit.platform()=="win":
+    from lredit_native import *
 
 ## @mainpage User Manual
 #

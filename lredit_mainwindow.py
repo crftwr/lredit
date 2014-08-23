@@ -36,9 +36,11 @@ import lredit_configmenu
 import lredit_commandline
 import lredit_history
 import lredit_misc
-import lredit_native
 import lredit_resource
 import lredit_debug
+
+if ckit.platform()=="win":
+    import lredit_native
 
 CommandSequence = ckit.CommandSequence
 

@@ -5,8 +5,10 @@ import ckit
 from ckit.ckit_const import *
 
 import lredit_misc
-import lredit_native
 import lredit_debug
+
+if ckit.platform()=="win":
+    import lredit_native
 
 
 ## @addtogroup commandline
