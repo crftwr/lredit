@@ -16,9 +16,20 @@ from setuptools import setup
 
 APP = ['lredit_main.py']
 DATA_FILES = []
-OPTIONS = {'argv_emulation': True}
+OPTIONS = {
+    'argv_emulation': True,
+    'iconfile': 'app.icns',
+    "includes": [
+        "lredit",
+        ],
+    "resources": [
+        "theme",
+        "_config.py",
+        ],
+    }
 
 setup(
+    name = "LREdit",
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},
