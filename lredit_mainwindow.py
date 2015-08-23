@@ -3339,6 +3339,7 @@ class MainWindow( ckit.TextWindow ):
             lredit_mode.HtmlMode,
             lredit_mode.MakefileMode,
             lredit_mode.BatchMode,
+            lredit_mode.SqlMode,
             ckit.TextMode,
         ]
 
@@ -3360,6 +3361,7 @@ class MainWindow( ckit.TextWindow ):
             ( "*.html *.htm", "html" ),
             ( "makefile *.mk", "makefile" ),
             ( "*.bat", "batch" ),
+            ( "*.sql", "sql" ),
             ( "*", "text" ),
         ]
 

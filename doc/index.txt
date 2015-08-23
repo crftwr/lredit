@@ -74,6 +74,7 @@
     - HTML
     - Makefile
     - Batch
+    - SQL
     - Text
     - ユーザ定義が可能
 
@@ -1458,6 +1459,7 @@ extensionディレクトリ
                 ( "*.html *.htm", "html" ),
                 ( "makefile *.mk", "makefile" ),
                 ( "*.bat", "batch" ),
+                ( "*.sql", "sql" ),
                 ( "*", "text" ),
             ]
 

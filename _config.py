@@ -200,6 +200,7 @@ def configure(window):
         ( "*.html *.htm", "html" ),
         ( "makefile *.mk", "makefile" ),
         ( "*.bat", "batch" ),
+        ( "*.sql", "sql" ),
         ( "*", "text" ),
     ]
 

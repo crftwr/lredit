@@ -232,5 +232,26 @@ class BatchMode(Mode):
         Mode.configure( self, edit )
         ckit.callConfigFunc("configure_BatchMode",self,edit)
 
+
+## Sqlモード
+class SqlMode(Mode):
+
+    name = "sql"
+
+    def __init__(self):
+        Mode.__init__(self)
+        self.lexer = lredit_lexer.SqlLexer()
+        self.completion = ckit.WordCompletion()
+
+    @staticmethod
+    def staticconfigure(window):
+        Mode.staticconfigure(window)
+        ckit.callConfigFunc("staticconfigure_SqlMode",window)
+
+    def configure( self, edit ):
+        Mode.configure( self, edit )
+        ckit.callConfigFunc("configure_SqlMode",self,edit)
+
+
 ## @} textwidget
 

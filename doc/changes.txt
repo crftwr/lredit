@@ -7,6 +7,8 @@
         - 拡張モジュールを Visual Studio 2013 を使ってビルドするように変更
 
         - CompareOptions に Ignore.Case を指定すると、Compare コマンドでエラーが発生していたのを修正。
+        
+        - Sqlモードを追加
 
     1.75
 
