@@ -4919,8 +4919,8 @@ class MainWindow( ckit.TextWindow ):
                 right_lines.append(line.s)
 
         if ignore_case:
-            left_lines = map( lambda s : s.lower(), left_lines )
-            right_lines = map( lambda s : s.lower(), right_lines )
+            left_lines = list(map( lambda s : s.lower(), left_lines ))
+            right_lines = list(map( lambda s : s.lower(), right_lines ))
 
 
         diff_object = difflib.unified_diff( left_lines, right_lines, self.left_edit_pane.edit.doc.getName(), self.right_edit_pane.edit.doc.getName(), n=0 )

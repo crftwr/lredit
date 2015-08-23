@@ -6,6 +6,8 @@
 
         - 拡張モジュールを Visual Studio 2013 を使ってビルドするように変更
 
+        - CompareOptions に Ignore.Case を指定すると、Compare コマンドでエラーが発生していたのを修正。
+
     1.75
 
         - Python33 から Python34 に移行
