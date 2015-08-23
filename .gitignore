@@ -1,0 +1,16 @@
+__pycache__/
+doc/html/
+dist/
+doc/obj/
+lredit_native/Debug/
+lredit_native/Release/
+config.py
+lredit.ini
+lredit_native.exp
+lredit_native.lib
+lredit_native.pdb
+lredit_native/ipch/lredit_native-1990e196/lredit_native-83583a90.ipch
+lredit_native/lredit_native.sdf
+lredit_native/lredit_native.suo
+lredit_native/lredit_native.v12.suo
+lredit_native/lredit_native.vcxproj.user
