@@ -15,7 +15,7 @@ DIST_DIR = "dist/lredit"
 VERSION = lredit_resource.lredit_version.replace(".","")
 ARCHIVE_NAME = "lredit_%s.zip" % VERSION
 
-PYTHON_DIR = "c:/python34"
+PYTHON_DIR = "c:/Python34"
 PYTHON = PYTHON_DIR + "/python.exe"
 DOXYGEN_DIR = "c:/Program Files/doxygen"
 
