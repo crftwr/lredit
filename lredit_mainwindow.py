@@ -3186,7 +3186,8 @@ class MainWindow( ckit.TextWindow ):
                 return ""
         str_info += " [%s:%s]" % ( pane.edit.doc.encoding, lineendName(pane.edit.doc.lineend) )
         cursor = pane.edit.selection.cursor()
-        str_cursor = "%d:%d" % (cursor.line+1, cursor.index+1)
+        column = pane.edit.getColumnFromIndex( cursor.line, cursor.index )
+        str_cursor = "%d:%d" % (cursor.line+1, column+1)
         str_info += " %8s" % str_cursor
         margin = max((width-len(str_info))//2,0)
         self.putString( x+margin, y, width-margin, height, attr, str_info )
