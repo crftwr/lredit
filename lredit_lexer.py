@@ -132,6 +132,188 @@ class PythonLexer(RegexLexer):
 
 #----------------------------------------------------------
 
+## Perl のシンタックス解析クラス
+class PerlLexer(RegexLexer):
+    
+    def __init__(self):
+    
+        RegexLexer.__init__(self)
+
+        self.rule_map["balanced-regex"] = [
+            (r'/(\\\\|\\[^\\]|[^\\/])*/[egimosx]*', Token_String, 'root'),
+            (r'!(\\\\|\\[^\\]|[^\\!])*![egimosx]*', Token_String, 'root'),
+            (r'\\(\\\\|[^\\])*\\[egimosx]*', Token_String, 'root'),
+            (r'\{(\\\\|\\[^\\]|[^\\}])*\}[egimosx]*', Token_String, 'root'),
+            (r'<(\\\\|\\[^\\]|[^\\>])*>[egimosx]*', Token_String, 'root'),
+            (r'\[(\\\\|\\[^\\]|[^\\\]])*\][egimosx]*', Token_String, 'root'),
+            (r'\((\\\\|\\[^\\]|[^\\)])*\)[egimosx]*', Token_String, 'root'),
+            (r'@(\\\\|\\[^\\]|[^\\@])*@[egimosx]*', Token_String, 'root'),
+            (r'%(\\\\|\\[^\\]|[^\\%])*%[egimosx]*', Token_String, 'root'),
+            (r'\$(\\\\|\\[^\\]|[^\\$])*\$[egimosx]*', Token_String, 'root'),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["root"] = [
+            (r'\#.*?$', Token_Comment),
+            (r'^=[a-zA-Z0-9]+\s+.*?\n=cut', Token_Comment),
+            (r'(case|continue|do|else|elsif|for|foreach|if|last|my|next|our|redo|'
+             r'reset|then|unless|until|while|use|print|new|BEGIN|CHECK|INIT|END|return)\b',Token_Keyword, None, RegexLexer.Detail),
+            (r'(format)(\s+)(\w+)(\s*)(=)(\s*\n)', (Token_Keyword, Token_Text, Token_Name, Token_Text, Token_Text, Token_Text), 'format'),
+            (r'(eq|lt|gt|le|ge|ne|not|and|or|cmp)\b', Token_Keyword, None, RegexLexer.Detail),
+            # common delimiters
+            (r's/(\\\\|\\[^\\]|[^\\/])*/(\\\\|\\[^\\]|[^\\/])*/[egimosx]*', Token_String),
+            (r's!(\\\\|\\!|[^!])*!(\\\\|\\!|[^!])*![egimosx]*', Token_String),
+            (r's\\(\\\\|[^\\])*\\(\\\\|[^\\])*\\[egimosx]*', Token_String),
+            (r's@(\\\\|\\[^\\]|[^\\@])*@(\\\\|\\[^\\]|[^\\@])*@[egimosx]*', Token_String),
+            (r's%(\\\\|\\[^\\]|[^\\%])*%(\\\\|\\[^\\]|[^\\%])*%[egimosx]*', Token_String),
+            # balanced delimiters
+            (r's\{(\\\\|\\[^\\]|[^\\}])*\}\s*', Token_String, 'balanced-regex'),
+            (r's<(\\\\|\\[^\\]|[^\\>])*>\s*', Token_String, 'balanced-regex'),
+            (r's\[(\\\\|\\[^\\]|[^\\\]])*\]\s*', Token_String, 'balanced-regex'),
+            (r's\((\\\\|\\[^\\]|[^\\)])*\)\s*', Token_String, 'balanced-regex'),
+
+            (r'm?/(\\\\|\\[^\\]|[^\\/\n])*/[gcimosx]*', Token_String),
+            (r'm(?=[/!\\{<\[(@%$])', Token_String, 'balanced-regex'),
+            (r'((?<==~)|(?<=\())\s*/(\\\\|\\[^\\]|[^\\/])*/[gcimosx]*', Token_String),
+            (r'\s+', Token_Text),
+            (r'(abs|accept|alarm|atan2|bind|binmode|bless|caller|chdir|'
+             r'chmod|chomp|chop|chown|chr|chroot|close|closedir|connect|'
+             r'continue|cos|crypt|dbmclose|dbmopen|defined|delete|die|'
+             r'dump|each|endgrent|endhostent|endnetent|endprotoent|'
+             r'endpwent|endservent|eof|eval|exec|exists|exit|exp|fcntl|'
+             r'fileno|flock|fork|format|formline|getc|getgrent|getgrgid|'
+             r'getgrnam|gethostbyaddr|gethostbyname|gethostent|getlogin|'
+             r'getnetbyaddr|getnetbyname|getnetent|getpeername|getpgrp|'
+             r'getppid|getpriority|getprotobyname|getprotobynumber|'
+             r'getprotoent|getpwent|getpwnam|getpwuid|getservbyname|'
+             r'getservbyport|getservent|getsockname|getsockopt|glob|gmtime|'
+             r'goto|grep|hex|import|index|int|ioctl|join|keys|kill|last|'
+             r'lc|lcfirst|length|link|listen|local|localtime|log|lstat|'
+             r'map|mkdir|msgctl|msgget|msgrcv|msgsnd|my|next|no|oct|open|'
+             r'opendir|ord|our|pack|package|pipe|pop|pos|printf|'
+             r'prototype|push|quotemeta|rand|read|readdir|'
+             r'readline|readlink|readpipe|recv|redo|ref|rename|require|'
+             r'reverse|rewinddir|rindex|rmdir|scalar|seek|seekdir|'
+             r'select|semctl|semget|semop|send|setgrent|sethostent|setnetent|'
+             r'setpgrp|setpriority|setprotoent|setpwent|setservent|'
+             r'setsockopt|shift|shmctl|shmget|shmread|shmwrite|shutdown|'
+             r'sin|sleep|socket|socketpair|sort|splice|split|sprintf|sqrt|'
+             r'srand|stat|study|substr|symlink|syscall|sysopen|sysread|'
+             r'sysseek|system|syswrite|tell|telldir|tie|tied|time|times|tr|'
+             r'truncate|uc|ucfirst|umask|undef|unlink|unpack|unshift|untie|'
+             r'utime|values|vec|wait|waitpid|wantarray|warn|write)\b', Token_Name, None, RegexLexer.Detail),
+            (r'((__(DATA|DIE|WARN)__)|(STD(IN|OUT|ERR)))\b', Token_Name, None, RegexLexer.Detail),
+            (r'<<([\'"]?)([a-zA-Z_]\w*)\1;?\n.*?\n\2\n', Token_String),
+            (r'__END__', Token_Preproc, 'end-part'),
+            (r'\$\^[ADEFHILMOPSTWX]', Token_Name),
+            (r"\$[\\\"\[\]'&`+*.,;=%~?@$!<>(^|/-](?!\w)", Token_Name),
+            (r'[$@%#]+', Token_Name, 'varname'),
+            (r'0_?[0-7]+(_[0-7]+)*', Token_Number, None, RegexLexer.Detail),
+            (r'0x[0-9A-Fa-f]+(_[0-9A-Fa-f]+)*', Token_Number, None, RegexLexer.Detail),
+            (r'0b[01]+(_[01]+)*', Token_Number, None, RegexLexer.Detail),
+            (r'(?i)(\d*(_\d*)*\.\d+(_\d*)*|\d+(_\d*)*\.\d+(_\d*)*)(e[+-]?\d+)?', Token_Number, None, RegexLexer.Detail),
+            (r'(?i)\d+(_\d*)*e[+-]?\d+(_\d*)*', Token_Number, None, RegexLexer.Detail),
+            (r'\d+(_\d+)*', Token_Number, None, RegexLexer.Detail),
+            (r"'(\\\\|\\[^\\]|[^'\\])*'", Token_String),
+            (r'"(\\\\|\\[^\\]|[^"\\])*"', Token_String),
+            (r'`(\\\\|\\[^\\]|[^`\\])*`', Token_String),
+            (r'<([^\s>]+)>', Token_String),
+            (r'(q|qq|qw|qr|qx)\{', Token_String, 'cb-string'),
+            (r'(q|qq|qw|qr|qx)\(', Token_String, 'rb-string'),
+            (r'(q|qq|qw|qr|qx)\[', Token_String, 'sb-string'),
+            (r'(q|qq|qw|qr|qx)\<', Token_String, 'lt-string'),
+            (r'(q|qq|qw|qr|qx)([\W_])(.|\n)*?\2', Token_String),
+            (r'package\s+', Token_Keyword, 'modulename'),
+            (r'sub\s+', Token_Keyword, 'funcname'),
+            (r'(\[\]|\*\*|::|<<|>>|>=|<=>|<=|={3}|!=|=~|'
+             r'!~|&&?|\|\||\.{1,3})', Token_Text, None, RegexLexer.Detail),
+            (r'[-+/*%=<>&^|!\\~]=?', Token_Text, None, RegexLexer.Detail),
+            (r'[()\[\]:;,<>/?{}]', Token_Text, None, RegexLexer.Detail),  # yes, there's no shortage of punctuation in Perl!
+            ('[a-zA-Z_][a-zA-Z0-9_]*', Token_Text, None, RegexLexer.Detail),
+            (None,Token_Text)
+        ]
+
+        self.rule_map["format"] = [
+            (r'\.\n', Token_String, 'root'),
+            (r'[^\n]*\n', Token_String),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["varname"] = [
+            (r'\s+', Token_Text),
+            (r'\{', Token_Text, 'root'),    # hash syntax?
+            (r'\)|,', Token_Text, 'root'),  # argument specifier
+            (r'\w+::', Token_Name),
+            (r'[\w:]+', Token_Name, 'root'),
+            (None,Token_Name)
+        ]
+        
+        self.rule_map["name"] = [
+            (r'\w+::', Token_Name),
+            (r'[\w:]+', Token_Name, 'root'),
+            (r'[A-Z_]+(?=\W)', Token_Name, 'root'),
+            (r'(?=\W)', Token_Text, 'root'),
+            (None,Token_Name)
+        ]
+        
+        self.rule_map["modulename"] = [
+            (r'[a-zA-Z_]\w*', Token_Name, 'root'),
+            (None,Token_Name)
+        ]
+        
+        self.rule_map["funcname"] = [
+            (r'[a-zA-Z_]\w*[!?]?', Token_Name),
+            (r'\s+', Token_Text),
+            # argument declaration
+            (r'(\([$@%]*\))(\s*)', (Token_Text, Token_Text)),
+            (r';', Token_Text, 'root'),
+            (r'.*?\{', Token_Text, 'root'),
+            (None,Token_Name)
+        ]
+        
+        self.rule_map["cb-string"] = [
+            (r'\\[{}\\]', Token_String),
+            (r'\\', Token_String),
+            #(r'\{', Token_String, 'cb-string'), # FIXME : ネストを解釈していない
+            (r'\}', Token_String, 'root'),
+            (r'[^{}\\]+', Token_String),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["rb-string"] = [
+            (r'\\[()\\]', Token_String),
+            (r'\\', Token_String),
+            #(r'\(', Token_String, 'rb-string'), # FIXME : ネストを解釈していない
+            (r'\)', Token_String, 'root'),
+            (r'[^()]+', Token_String),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["sb-string"] = [
+            (r'\\[\[\]\\]', Token_String),
+            (r'\\', Token_String),
+            #(r'\[', Token_String, 'sb-string'), # FIXME : ネストを解釈していない
+            (r'\]', Token_String, 'root'),
+            (r'[^\[\]]+', Token_String),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["lt-string"] = [
+            (r'\\[<>\\]', Token_String),
+            (r'\\', Token_String),
+            #(r'\<', Token_String, 'lt-string'), # FIXME : ネストを解釈していない
+            (r'\>', Token_String, 'root'),
+            (r'[^<>]+', Token_String),
+            (None,Token_String)
+        ]
+        
+        self.rule_map["end-part"] = [
+            (r'.+', Token_Preproc, 'root'),
+            (None,Token_Preproc)
+        ]
+
+#----------------------------------------------------------
+
 ## JavaScript のシンタックス解析クラス
 class JavaScriptLexer(RegexLexer):
     

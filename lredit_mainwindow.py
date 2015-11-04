@@ -3330,6 +3330,7 @@ class MainWindow( ckit.TextWindow ):
         ## モードのリスト
         self.mode_list = [
             lredit_mode.PythonMode,
+            lredit_mode.PerlMode,
             lredit_mode.JavaScriptMode,
             lredit_mode.CMode,
             lredit_mode.CppMode,
@@ -3352,6 +3353,7 @@ class MainWindow( ckit.TextWindow ):
         ## ファイル名とモードの関連付け
         self.fileext_list = [
             ( "*.py *.pyw *.pys", "python" ),
+            ( "*.pl", "perl" ),
             ( "*.js", "javascript" ),
             ( "*.cpp *.cc *.cxx *.hpp *.hh *.hxx *.h", "c++" ),
             ( "*.c *.h", "c" ),

@@ -33,6 +33,26 @@ class PythonMode(Mode):
         ckit.callConfigFunc("configure_PythonMode",self,edit)
 
 
+## Perlモード
+class PerlMode(Mode):
+
+    name = "perl"
+
+    def __init__(self):
+        Mode.__init__(self)
+        self.lexer = lredit_lexer.PerlLexer()
+        self.completion = ckit.WordCompletion()
+
+    @staticmethod
+    def staticconfigure(window):
+        Mode.staticconfigure(window)
+        ckit.callConfigFunc("staticconfigure_PerlMode",window)
+
+    def configure( self, edit ):
+        Mode.configure( self, edit )
+        ckit.callConfigFunc("configure_PerlMode",self,edit)
+
+
 ## JavaScriptモード
 class JavaScriptMode(Mode):
 

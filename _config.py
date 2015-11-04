@@ -190,6 +190,7 @@ def configure(window):
     window.fileext_list = [
         ( "*.ini", "ini" ),
         ( "*.py *.pyw *.pys", "python" ),
+        ( "*.pl", "perl" ),
         ( "*.js", "javascript" ),
         ( "*.cpp *.cc *.cxx *.hpp *.hh *.hxx *.h", "c++" ),
         ( "*.c *.h", "c" ),
