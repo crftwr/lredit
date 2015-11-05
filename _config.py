@@ -194,6 +194,8 @@ def configure(window):
         ( "*.js", "javascript" ),
         ( "*.cpp *.cc *.cxx *.hpp *.hh *.hxx *.h", "c++" ),
         ( "*.c *.h", "c" ),
+        ( "*.mm *.h", "objective-c++" ),
+        ( "*.m *.h", "objective-c" ),
         ( "*.cs", "c#" ),
         ( "*.java", "java" ),
         ( "*.vert *.frag *.geo", "glsl" ),

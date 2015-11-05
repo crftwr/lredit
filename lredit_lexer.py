@@ -502,6 +502,58 @@ class CppLexer(RegexLexer):
 
 #----------------------------------------------------------
 
+class ObjectiveCBase:
+
+    keywords = [
+        (r'@"', Token_String, 'string'),
+        (r"@'(\\.|\\[0-7]{1,3}|\\x[a-fA-F0-9]{1,2}|[^\\\'\n])'", Token_String),
+        (r'@(\d+\.\d*|\.\d+|\d+)[eE][+-]?\d+[lL]?', Token_Number, None, RegexLexer.Detail),
+        (r'@(\d+\.\d*|\.\d+|\d+[fF])[fF]?', Token_Number, None, RegexLexer.Detail),
+        (r'@0x[0-9a-fA-F]+[Ll]?', Token_Number, None, RegexLexer.Detail),
+        (r'@0[0-7]+[Ll]?', Token_Number, None, RegexLexer.Detail),
+        (r'@\d+[Ll]?', Token_Number, None, RegexLexer.Detail),
+        (r'(@interface|@implementation|@class|@protocol|@selector|@private|@protected|@public|@encode|'
+         r'@synchronized|@try|@throw|@catch|@finally|'
+         r'@end|@property|@synthesize|__bridge|__bridge_transfer|'
+         r'__autoreleasing|__block|__weak|__strong|weak|strong|'
+         r'copy|retain|assign|unsafe_unretained|atomic|nonatomic|'
+         r'readonly|readwrite|setter|getter|typeof|in|'
+         r'out|inout|release|class|@dynamic|@optional|'
+         r'@required|@autoreleasepool)\b', Token_Keyword, None, RegexLexer.Detail),
+        (r'(id|instancetype|Class|IMP|SEL|BOOL|'
+         r'IBOutlet|IBAction|unichar)\b', Token_Keyword, None, RegexLexer.Detail),
+        (r'@(true|false|YES|NO)', Token_Name, None, RegexLexer.Detail),
+        (r'(YES|NO|nil|self|super)\b', Token_Name, None, RegexLexer.Detail),
+        # Carbon types
+        (r'(Boolean|UInt8|SInt8|UInt16|SInt16|UInt32|SInt32)\b', Token_Keyword, None, RegexLexer.Detail),
+        # Carbon built-ins
+        (r'(TRUE|FALSE)\b', Token_Name, None, RegexLexer.Detail),
+    ]
+
+#----------------------------------------------------------
+
+## Objective-C のシンタックス解析クラス
+class ObjectiveCLexer(CLexer):
+    
+    def __init__(self):
+    
+        CLexer.__init__(self)
+
+        self.rule_map['root'] = ObjectiveCBase.keywords + self.rule_map['root']
+
+#----------------------------------------------------------
+
+## Objective-C++ のシンタックス解析クラス
+class ObjectiveCppLexer(CppLexer):
+    
+    def __init__(self):
+    
+        CppLexer.__init__(self)
+
+        self.rule_map['root'] = ObjectiveCBase.keywords + self.rule_map['root']
+
+#----------------------------------------------------------
+
 ## C# のシンタックス解析クラス
 class CsharpLexer(RegexLexer):
     

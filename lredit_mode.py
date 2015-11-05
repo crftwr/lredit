@@ -113,6 +113,46 @@ class CppMode(Mode):
         ckit.callConfigFunc("configure_CppMode",self,edit)
 
 
+## Objective-Cモード
+class ObjectiveCMode(Mode):
+
+    name = "objective-c"
+
+    def __init__(self):
+        Mode.__init__(self)
+        self.lexer = lredit_lexer.ObjectiveCLexer()
+        self.completion = ckit.WordCompletion()
+
+    @staticmethod
+    def staticconfigure(window):
+        Mode.staticconfigure(window)
+        ckit.callConfigFunc("staticconfigure_CMode",window)
+
+    def configure( self, edit ):
+        Mode.configure( self, edit )
+        ckit.callConfigFunc("configure_CMode",self,edit)
+
+
+## Objective-C++モード
+class ObjectiveCppMode(Mode):
+
+    name = "objective-c++"
+
+    def __init__(self):
+        Mode.__init__(self)
+        self.lexer = lredit_lexer.ObjectiveCppLexer()
+        self.completion = ckit.WordCompletion()
+
+    @staticmethod
+    def staticconfigure(window):
+        Mode.staticconfigure(window)
+        ckit.callConfigFunc("staticconfigure_CppMode",window)
+
+    def configure( self, edit ):
+        Mode.configure( self, edit )
+        ckit.callConfigFunc("configure_CppMode",self,edit)
+
+
 ## C#モード
 class CsharpMode(Mode):
 
