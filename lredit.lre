@@ -6,7 +6,6 @@ lredit_configmenu.py
 lredit_debug.py
 lredit_grep.py
 lredit_history.py
-lredit_ipc.py
 lredit_isearch.py
 lredit_lexer.py
 lredit_listwindow.py

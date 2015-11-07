@@ -36,6 +36,7 @@ strings_ja = {
     "menu_encoding"         : "エンコーディング(&E)",
     "menu_recent_files"     : "最近のファイル(&I)",
     "menu_recent_projects"  : "最近のプロジェクト(&J)",
+    "menu_recent_directories": "最近のディレクトリ(&D)",
     "menu_quit"             : "終了(&Q)",
 
     "menu_edit"         : "編集(&E)",
@@ -156,6 +157,9 @@ strings_ja = {
     "statusbar_tags_loaded"         : "Tags ファイルをロードしました.",
     "statusbar_project_opened"      : "プロジェクトファイルをオープンしました : %s",
     "statusbar_project_closed"      : "プロジェクトファイルをクローズしました.",
+    "statusbar_directory_opened"    : "ディレクトリをオープンしました : %s",
+    "statusbar_directory_closed"    : "ディレクトリをクローズしました : %s",
+    "statusbar_directory_closed_all" : "ディレクトリを全てクローズしました.",
     
     "not_textfile"                          : "テキストファイルではありません.",
     "saving"                                : "保存中...",
@@ -204,6 +208,7 @@ strings_en = {
     "menu_encoding"         : "&Encoding",
     "menu_recent_files"     : "Recent F&iles",
     "menu_recent_projects"  : "Recent Pro&jects",
+    "menu_recent_directories": "Recent &Directories",
     "menu_quit"             : "&Quit",
 
     "menu_edit"         : "&Edit",
@@ -324,6 +329,9 @@ strings_en = {
     "statusbar_tags_loaded"         : "Loaded Tags.",
     "statusbar_project_opened"      : "Opened project file : %s",
     "statusbar_project_closed"      : "Closed project file.",
+    "statusbar_directory_opened"    : "Opened directory : %s",
+    "statusbar_directory_closed"    : "Closed directory : %s",
+    "statusbar_directory_closed_all" : "Closed all directories.",
     
     "not_textfile"                          : "Not a text file.",
     "saving"                                : "Saving...",

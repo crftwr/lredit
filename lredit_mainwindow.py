@@ -21,6 +21,7 @@ from ckit.ckit_const import *
 import lredit_mode
 import lredit_minormode
 import lredit_project
+import lredit_directory
 import lredit_bookmark
 import lredit_isearch
 import lredit_grep
@@ -290,6 +291,7 @@ class MainWindow( ckit.TextWindow ):
         self.progress_bar = None
 
         self.project = None
+        self.directories = lredit_directory.DirectoryList()
         self.bookmarks = lredit_bookmark.BookmarkTable()
         self.bookmarks.load( self.ini, "BOOKMARK" )
         self.edit_list = []
@@ -305,6 +307,8 @@ class MainWindow( ckit.TextWindow ):
 
         self.filename_history = lredit_history.History(1000)
         self.filename_history.load( self.ini, "FILENAME" )
+        self.dirname_history = lredit_history.History(100)
+        self.dirname_history.load( self.ini, "DIRNAME" )
         self.commandline_history = lredit_history.History(1000)
         self.commandline_history.load( self.ini, "COMMANDLINE" )
         self.search_history = lredit_history.History(100)
@@ -885,11 +889,10 @@ class MainWindow( ckit.TextWindow ):
     #  @param title                     コマンド入力欄の左側に表示されるタイトル文字列
     #  @param dirname                   コマンド入力欄の初期文字列
     #  @param recursive                 再帰の有無を入力するかどうか ( None:無効, True/False:有効 )
-    #  @param history                   補完入力のためのHistoryオブジェクト
     #  @param return_modkey             入力欄が閉じたときに押されていたモディファイアキーを取得するか
     #  @return                          入力された文字列
     #
-    def inputDirname( self, title, dirname, recursive=None, history=None, return_modkey=False ):
+    def inputDirname( self, title, dirname, recursive=None, return_modkey=False ):
 
         recursive = [recursive]
 
@@ -922,10 +925,16 @@ class MainWindow( ckit.TextWindow ):
                     s += "  "
                 return s
 
+        """
         if not dirname:
             if len(self.filename_history.items)>0:
                 dirname = os.path.dirname( self.filename_history.items[0] )
                 dirname = ckit.joinPath( dirname, "" )
+        """
+
+        if not dirname:
+            if len(self.dirname_history.items)>0:
+                dirname = self.dirname_history.items[0]
 
         if not dirname:
             dirname = os.getcwd()
@@ -934,21 +943,19 @@ class MainWindow( ckit.TextWindow ):
         selection = [ len(dirname), len(dirname) ]
         base = "."
 
-        history_items = None
-        history_remove_func = None
-        if history:
-            history_items = history.items
-            history_remove_func = history.candidateRemoveHandler
-
-        dirname, mod = self.commandLine( title, dirname, selection, auto_complete=False, autofix_list=["\\/","."], return_modkey=True, candidate_handler=lredit_commandline.candidate_Filename( base, history_items ), candidate_remove_handler=history_remove_func, status_handler=statusString, keydown_handler=onKeyDown )
+        dirname, mod = self.commandLine( title, dirname, selection, auto_complete=False, autofix_list=["\\/","."], return_modkey=True, candidate_handler=lredit_commandline.candidate_Filename( base, self.dirname_history.items ), status_handler=statusString, keydown_handler=onKeyDown )
         if dirname==None:
             if return_modkey:
                 return None, recursive[0], 0
             else:
                 return None, recursive[0]
 
+        # 末尾のディレクトリ区切り文字を削除する
+        dirname = ckit.joinPath( dirname, "." )
+        dirname = ckit.splitPath( dirname )[0]
         dirname = ckit.joinPath( base, dirname )
-        if history : history.append(dirname)
+
+        self.dirname_history.append(dirname)
 
         if return_modkey:
             return dirname, recursive[0], mod
@@ -2146,6 +2153,28 @@ class MainWindow( ckit.TextWindow ):
                     if i>=10: break
             return menu_items
 
+        # [最近のディレクトリ]のサブメニュー項目
+        def menuitems_RecentDirectories():
+
+            class command_OpenSpecificDirectory:
+
+                def __init__( command_self, dirname ):
+                    command_self.dirname = dirname
+
+                def __call__( command_self, info ):
+                    info = ckit.CommandInfo()
+                    info.args = [ command_self.dirname ]
+                    self.command.OpenDirectory(info)
+
+            menu_items = []
+            i = 0
+            for dirname in self.dirname_history.items:
+                menu_items.append( ckit.MenuNode( "recent_directory%d"%i, "&%d %s" % ( (i+1)%10, dirname ), command_OpenSpecificDirectory(dirname) ) )
+                i += 1
+                if i>=10: break
+            return menu_items
+
+
         # メニュー全体の定義
         self.menu_bar = ckit.MenuNode(
 
@@ -2195,6 +2224,12 @@ class MainWindow( ckit.TextWindow ):
                             "recent_projects",      ckit.strings["menu_recent_projects"],
                             items=[
                                 menuitems_RecentProjects,
+                            ]
+                        ),
+                        ckit.MenuNode(
+                            "recent_directories",   ckit.strings["menu_recent_directories"],
+                            items=[
+                                menuitems_RecentDirectories,
                             ]
                         ),
                         ckit.MenuNode( separator=True ),
@@ -3480,6 +3515,11 @@ class MainWindow( ckit.TextWindow ):
             pass
 
         try:
+            self.ini.add_section("DIRNAME")
+        except configparser.DuplicateSectionError:
+            pass
+
+        try:
             self.ini.add_section("SEARCH")
         except configparser.DuplicateSectionError:
             pass
@@ -3631,6 +3671,7 @@ class MainWindow( ckit.TextWindow ):
             self.ini.set( "GEOMETRY", "left_edit_pane_width", str(self.left_edit_pane_width) )
 
             self.filename_history.save( self.ini, "FILENAME" )
+            self.dirname_history.save( self.ini, "DIRNAME" )
             self.commandline_history.save( self.ini, "COMMANDLINE" )
             self.search_history.save( self.ini, "SEARCH" )
             self.replace_history.save( self.ini, "REPLACE" )
@@ -5240,14 +5281,8 @@ class MainWindow( ckit.TextWindow ):
 
         edit = self.activeEditPane().edit
         active_edit_lineno = edit.selection.cursor().line
-
-        # プロジェクトファイルの隣のTAGSファイルをロードする
-        if self.project:
-            tags_filename = ckit.joinPath(os.path.dirname(self.project.filename),"tags")
-            try:
-                self.loadTags(tags_filename)
-            except IOError:
-                pass
+        
+        self.loadTagsForAllDirectories()
 
         symbol_list = set()
         for tags in self.tags_list:
@@ -5500,6 +5535,148 @@ class MainWindow( ckit.TextWindow ):
         self.activeOpen( filename=fullpath )
 
 
+
+
+
+
+    ## ディレクトリを開く
+    def command_OpenDirectory( self, info ):
+
+        if len(info.args)>=1:
+            dirname = info.args[0]
+        else:
+            dirname = self.activeEditPane().edit.doc.getFullpath()
+            if dirname:
+                dirname = ckit.joinPath(dirname,"")
+            dirname, recursive = self.inputDirname( "Open Directory", dirname )
+            if not dirname : return
+
+        if not os.path.isdir(dirname):
+            # FIXME : error 表示
+            return
+        
+        # 末尾のディレクトリ区切り文字を削除する
+        dirname = ckit.joinPath( dirname, "." )
+        dirname = ckit.splitPath( dirname )[0]
+        dirname = ckit.joinPath( ".", dirname )
+
+        self.directories.openDirectory(dirname)
+
+        self.dirname_history.append(dirname)
+
+        self.setStatusMessage( ckit.strings["statusbar_directory_opened"] % dirname, 3000 )
+
+
+    ## ディレクトリを閉じる
+    def command_CloseDirectory( self, info ):
+
+        if len(info.args)>=1:
+            dirname = info.args[0]
+        else:
+            dirname = self.activeEditPane().edit.doc.getFullpath()
+            if dirname:
+                dirname = ckit.joinPath(dirname,"")
+            dirname = self.inputDirname( "Close Directory", dirname )
+            if not dirname : return
+
+        self.directories.closeDirectory(dirname)
+
+        self.setStatusMessage( ckit.strings["statusbar_directory_closed"] % dirname, 3000 )
+
+
+    ## ディレクトリを全て閉じる
+    def command_CloseDirectoryAll( self, info ):
+
+        self.directories.closeDirectoryAll()
+
+        self.setStatusMessage( ckit.strings["statusbar_directory_closed_all"], 3000 )
+
+
+    ## プロジェクト中のファイルを一覧表示する
+    def command_DirectoryFileList( self, info ):
+        
+        """
+        if not self.project:
+            self.setStatusMessage( ckit.strings["project_not_opened"], 3000, error=True )
+            return
+        """
+
+        edit = self.activeEditPane().edit
+        active_edit_filename = edit.doc.getFullpath()
+
+        loop = [False]
+        fullpath_mode = [False]
+        select = None
+
+        def onKeyDown( vk, mod ):
+
+            if vk==VK_SPACE and mod==0:
+                fullpath_mode[0] = not fullpath_mode[0]
+                loop[0] = True
+                list_window.quit()
+                return True
+
+        def onStatusMessage( width, select ):
+            return ""
+
+        while True:
+
+            loop[0] = False
+
+            items = []
+            for filename in self.directories.enumFilenames( ["*"] ):
+
+                if fullpath_mode[0]:
+                    items.append( ( filename, filename ) )
+                else:
+                    items.append( ( ckit.splitPath(filename)[1], filename ) )
+
+                if select==None and active_edit_filename==filename:
+                    select = len(items)-1
+
+            if select==None:
+                select = 0
+
+            pos = self.centerOfWindowInPixel()
+            list_window = lredit_listwindow.ListWindow( pos[0], pos[1], 20, 2, self.width()-5, self.height()-3, self, self.ini, True, "Directory", items, initial_select=select, onekey_search=False, keydown_hook=onKeyDown, statusbar_handler=onStatusMessage )
+            self.enable(False)
+            list_window.messageLoop()
+
+            # チラつき防止の遅延削除
+            class DelayedCall:
+                def __call__(self):
+                    self.list_window.destroy()
+            delay = DelayedCall()
+            delay.list_window = list_window
+            self.delayedCall( delay, 10 )
+
+            if not loop[0]:
+                break
+
+            select = list_window.getResult()
+
+        result = list_window.getResult()
+        self.enable(True)
+        self.activate()
+
+        if result<0 : return
+
+        filename = items[result][1]
+
+        if fullpath_mode[0]:
+            fullpath = filename
+        else:
+            fullpath = ckit.normPath( filename )
+
+        self.activeOpen( filename=fullpath )
+
+
+
+
+
+
+
+
     ## 最近開いたファイルを一覧表示する
     def command_RecentFileList( self, info ):
 
@@ -5726,12 +5903,8 @@ class MainWindow( ckit.TextWindow ):
     ## TAGSファイルを生成する
     def command_GenerateTags( self, info ):
 
-        if not self.project:
-            self.setStatusMessage( ckit.strings["project_not_opened"], 3000, error=True )
-            return
-
-        tags_filename = ckit.joinPath( self.project.dirname, "tags" )
-        srcs_filename = ckit.joinPath( self.project.dirname, "tags.srcs" )
+        directory_list = self.directories.items[:]
+        filename_pattern_list = ["*"]
 
         class SubThread( threading.Thread ):
 
@@ -5739,31 +5912,36 @@ class MainWindow( ckit.TextWindow ):
                 threading.Thread.__init__(thread_self)
                 thread_self.p = None
 
-            def createSourceFilesList( thread_self, filename ):
+            def createSourceFilesList( thread_self, srcs_filename, directory ):
 
-                fd = open( filename, "w", encoding="mbcs" )
+                fd = open( srcs_filename, "w", encoding="mbcs" )
 
-                for filename in self.project.enumName():
+                for filename in directory.enumFilenames( filename_pattern_list ):
                     fd.write(os.path.normpath(filename))
                     fd.write("\r\n")
 
                 fd.close()
 
             def run(thread_self):
+
                 lredit_native.setBlockDetector()
+                
+                for directory in directory_list:
 
-                thread_self.createSourceFilesList(srcs_filename)
+                    tags_filename = ckit.joinPath( directory.dirname, "tags" )
+                    srcs_filename = ckit.joinPath( directory.dirname, "tags.srcs" )
 
-                cmd = [ os.path.join( ckit.getAppExePath(), "bin/ctags.exe" ) ]
-                cmd += [ "-o", tags_filename ]
-                cmd += [ "-n" ] # タグ情報として行番号を使用する
-                cmd += [ "-L", srcs_filename ]
+                    thread_self.createSourceFilesList( srcs_filename, directory )
 
-                thread_self.p = ckit.SubProcess(cmd,cwd=self.project.dirname,env=None)
-                thread_self.p()
-                thread_self = None
+                    cmd = [ os.path.join( ckit.getAppExePath(), "bin/ctags.exe" ) ]
+                    cmd += [ "-o", tags_filename ]
+                    cmd += [ "-n" ] # タグ情報として行番号を使用する
+                    cmd += [ "-L", srcs_filename ]
 
-                os.unlink(srcs_filename)
+                    thread_self.p = ckit.SubProcess(cmd,cwd=directory.dirname,env=None)
+                    thread_self.p()
+
+                    os.unlink(srcs_filename)
 
             def cancel(thread_self):
                 if thread_self.p:
@@ -5822,6 +6000,7 @@ class MainWindow( ckit.TextWindow ):
         try:
             self.subThreadCall( tags.parse, (), cancel, raise_error=True )
         finally:
+            self.clearStatusMessage()
             self.clearProgress()
 
         if cancel_requested[0]:
@@ -5831,6 +6010,16 @@ class MainWindow( ckit.TextWindow ):
 
         if not cancel_requested[0]:
             self.tags_list.insert( 0, tags )
+
+    
+    def loadTagsForAllDirectories(self):
+        for directory in self.directories.items:
+            tags_filename = ckit.joinPath(directory.dirname,"tags")
+            try:
+                self.loadTags(tags_filename)
+            except IOError:
+                pass
+
 
     ## TAGSファイルをロードする
     def command_LoadTags( self, info ):
@@ -5866,14 +6055,8 @@ class MainWindow( ckit.TextWindow ):
 
         if not symbol:
             return
-
-        # プロジェクトファイルの隣のTAGSファイルをロードする
-        if self.project:
-            tags_filename = ckit.joinPath(os.path.dirname(self.project.filename),"tags")
-            try:
-                self.loadTags(tags_filename)
-            except IOError:
-                pass
+        
+        self.loadTagsForAllDirectories()
 
         for tags in self.tags_list:
             tags_items = tags.find(symbol)
