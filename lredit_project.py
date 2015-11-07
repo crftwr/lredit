@@ -1,4 +1,5 @@
 ﻿import os
+import fnmatch
 
 import ckit
 from ckit.ckit_const import *
@@ -44,20 +45,30 @@ class Project:
         lines = data.splitlines(False)
 
         for line in lines:
-            filename = line.strip()
-            if not filename : continue
-            fullpath = ckit.normPath( ckit.joinPath( self.dirname, filename ) )
-            self.items.append( ( filename, fullpath ) )
+            path = line.strip()
+            if not path : continue
+            dirname, filename = ckit.splitPath(path)
+            
+            if ("*" in filename) or ("?" in filename):
+                self.items.append( ( dirname, filename.split(" ") ) )
+            else:
+                self.items.append( ( dirname, filename ) )
 
     ## プロジェクト中のアイテムを列挙する
     def enumName(self):
         for item in self.items:
-            yield item[0]
+            if isinstance(item[1],str):
+                yield ckit.joinPath( item[0], item[1] )
+            else:
+                for filename in os.listdir( os.path.join( self.dirname, item[0] ) ):
+                    for pattern in item[1]:
+                        if fnmatch.fnmatch( filename, pattern ):
+                            yield ckit.joinPath( item[0], filename )
 
     ## プロジェクト中のアイテムをフルパスで列挙する
     def enumFullpath(self):
-        for item in self.items:
-            yield item[1]
+        for item in self.enumName():
+            yield ckit.normPath( ckit.joinPath( self.dirname, item ) )
 
     ## プロジェクトファイルが更新されているかをチェックする
     def isFileModified(self):
