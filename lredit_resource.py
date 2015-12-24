@@ -12,346 +12,481 @@ _startup_string_fmt = """\
 def startupString():
     return _startup_string_fmt % ( lredit_appname, lredit_version )
 
+ckit.strings.setString( "common_yes",
+    en_US = "Yes",
+    ja_JP = "はい" )
+ckit.strings.setString( "common_no",
+    en_US = "No",
+    ja_JP = "いいえ" )
+ckit.strings.setString( "common_done",
+    en_US = "Done.",
+    ja_JP = "完了." )
+ckit.strings.setString( "common_aborted",
+    en_US = "Aborted.",
+    ja_JP = "中断しました." )
+ckit.strings.setString( "common_failed",
+    en_US = "Failed.",
+    ja_JP = "失敗." )
 
-strings_ja = {
-    "common_yes"        : "はい",
-    "common_no"         : "いいえ",
-    "common_done"       : "完了.",
-    "common_aborted"    : "中断しました.",
-    "common_failed"     : "失敗.",
+ckit.strings.setString( "menu_file",
+    en_US = "&File",
+    ja_JP = "ファイル(&F)" )
+ckit.strings.setString( "menu_new",
+    en_US = "&New",
+    ja_JP = "新規作成(&N)" )
+ckit.strings.setString( "menu_open",
+    en_US = "&Open",
+    ja_JP = "開く(&O)" )
+ckit.strings.setString( "menu_reopen",
+    en_US = "&Reopen",
+    ja_JP = "開き直す(&R)" )
+ckit.strings.setString( "menu_close",
+    en_US = "&Close",
+    ja_JP = "閉じる(&C)" )
+ckit.strings.setString( "menu_project",
+    en_US = "&Project",
+    ja_JP = "プロジェクト(&P)" )
+ckit.strings.setString( "menu_open_project",
+    en_US = "&Open",
+    ja_JP = "開く(&O)" )
+ckit.strings.setString( "menu_close_project",
+    en_US = "&Close",
+    ja_JP = "閉じる(&C)" )
+ckit.strings.setString( "menu_edit_project",
+    en_US = "&Edit",
+    ja_JP = "編集(&E)" )
+ckit.strings.setString( "menu_project_file_list",
+    en_US = "Project &File List",
+    ja_JP = "プロジェクトファイル一覧(&F)" )
+ckit.strings.setString( "menu_save",
+    en_US = "&Save",
+    ja_JP = "保存(&S)" )
+ckit.strings.setString( "menu_save_as",
+    en_US = "Save &As",
+    ja_JP = "名前を付けて保存(&A)" )
+ckit.strings.setString( "menu_save_all",
+    en_US = "Save A&ll",
+    ja_JP = "すべて保存(&L)" )
+ckit.strings.setString( "menu_encoding",
+    en_US = "&Encoding",
+    ja_JP = "エンコーディング(&E)" )
+ckit.strings.setString( "menu_recent_files",
+    en_US = "Recent F&iles",
+    ja_JP = "最近のファイル(&I)" )
+ckit.strings.setString( "menu_recent_projects",
+    en_US = "Recent Pro&jects",
+    ja_JP = "最近のプロジェクト(&J)" )
+ckit.strings.setString( "menu_quit",
+    en_US = "&Quit",
+    ja_JP = "終了(&Q)" )
+
+ckit.strings.setString( "menu_edit",
+    en_US = "&Edit",
+    ja_JP = "編集(&E)" )
+ckit.strings.setString( "menu_undo",
+    en_US = "&Undo",
+    ja_JP = "元に戻す(&U)" )
+ckit.strings.setString( "menu_redo",
+    en_US = "&Redo",
+    ja_JP = "やり直し(&R)" )
+ckit.strings.setString( "menu_cut",
+    en_US = "Cu&t",
+    ja_JP = "切り取り(&T)" )
+ckit.strings.setString( "menu_copy",
+    en_US = "&Copy",
+    ja_JP = "コピー(&C)" )
+ckit.strings.setString( "menu_paste",
+    en_US = "&Paste",
+    ja_JP = "貼り付け(&P)" )
+ckit.strings.setString( "menu_delete",
+    en_US = "&Delete",
+    ja_JP = "削除(&D)" )
+ckit.strings.setString( "menu_select_all",
+    en_US = "Select A&ll",
+    ja_JP = "すべてを選択(&L)" )
+ckit.strings.setString( "menu_convert_char",
+    en_US = "Con&vert",
+    ja_JP = "文字変換(&V)" )
+ckit.strings.setString( "menu_to_upper",
+    en_US = "&Uppercase",
+    ja_JP = "大文字化(&U)" )
+ckit.strings.setString( "menu_to_lower",
+    en_US = "&Lowercase",
+    ja_JP = "小文字化(&L)" )
+ckit.strings.setString( "menu_to_zenkaku",
+    en_US = "&Zenkaku",
+    ja_JP = "全角に変換(&Z)" )
+ckit.strings.setString( "menu_to_hankaku",
+    en_US = "&Hankaku",
+    ja_JP = "半角に変換(&H)" )
+ckit.strings.setString( "menu_complete",
+    en_US = "&Word Completion",
+    ja_JP = "単語補完(&W)" )
+ckit.strings.setString( "menu_jump_lineno",
+    en_US = "&Goto Line",
+    ja_JP = "指定行ジャンプ(&G)" )
+
+ckit.strings.setString( "menu_search",
+    en_US = "&Search",
+    ja_JP = "検索(&S)" )
+ckit.strings.setString( "menu_search_next",
+    en_US = "Search &Next",
+    ja_JP = "次を検索(&N)" )
+ckit.strings.setString( "menu_search_prev",
+    en_US = "Search &Prev",
+    ja_JP = "前を検索(&P)" )
+ckit.strings.setString( "menu_grep",
+    en_US = "&Grep",
+    ja_JP = "ファイルから検索(&G)" )
+ckit.strings.setString( "menu_tags",
+    en_US = "S&ymbol Search",
+    ja_JP = "シンボル検索(&Y)" )
+ckit.strings.setString( "menu_tags_jump",
+    en_US = "&Jump to Definition",
+    ja_JP = "定義位置へジャンプ(&J)" )
+ckit.strings.setString( "menu_tags_back",
+    en_US = "&Back to Original Position",
+    ja_JP = "ジャンプ元へ戻る(&B)" )
+ckit.strings.setString( "menu_load_tags",
+    en_US = "&Load TAGS",
+    ja_JP = "TAGSの読み込み(&L)" )
+ckit.strings.setString( "menu_generate_tags",
+    en_US = "&Generate TAGS",
+    ja_JP = "TAGSの生成(&G)" )
+ckit.strings.setString( "menu_replace",
+    en_US = "&Replace",
+    ja_JP = "置換(&R)" )
+ckit.strings.setString( "menu_compare",
+    en_US = "&Compare",
+    ja_JP = "比較(&C)" )
+
+ckit.strings.setString( "menu_view",
+    en_US = "&View",
+    ja_JP = "表示(&V)" )
+ckit.strings.setString( "menu_another_pane",
+    en_US = "&Another Pane",
+    ja_JP = "他方のペイン(&A)" )
+ckit.strings.setString( "menu_doclist",
+    en_US = "&Document List",
+    ja_JP = "文書選択(&D)" )
+
+ckit.strings.setString( "menu_tool",
+    en_US = "&Tool",
+    ja_JP = "ツール(&T)" )
+ckit.strings.setString( "menu_bookmark_list",
+    en_US = "&Bookmark List",
+    ja_JP = "ブックマーク一覧(&B)" )
+ckit.strings.setString( "menu_bookmark1",
+    en_US = "Bookmark&1",
+    ja_JP = "ブックマーク1(&1)" )
+ckit.strings.setString( "menu_bookmark2",
+    en_US = "Bookmark&2",
+    ja_JP = "ブックマーク2(&2)" )
+ckit.strings.setString( "menu_bookmark3",
+    en_US = "Bookmark&3",
+    ja_JP = "ブックマーク3(&3)" )
+ckit.strings.setString( "menu_bookmark_next",
+    en_US = "&Next Bookmark",
+    ja_JP = "次のブックマークへ(&N)" )
+ckit.strings.setString( "menu_bookmark_prev",
+    en_US = "&Prev Bookmark",
+    ja_JP = "前のブックマークへ(&P)" )
+ckit.strings.setString( "menu_outline",
+    en_US = "&Outline",
+    ja_JP = "アウトライン(&O)" )
+ckit.strings.setString( "menu_expand_tab",
+    en_US = "Expand &Tab",
+    ja_JP = "タブをスペースに展開(&T)" )
+ckit.strings.setString( "menu_remove_trailing_space",
+    en_US = "Remove Trailing &Space",
+    ja_JP = "行末の空白を削除(&S)" )
+ckit.strings.setString( "menu_remove_empty_lines",
+    en_US = "Remove &Empty Lines",
+    ja_JP = "空行を削除(&E)" )
+ckit.strings.setString( "menu_remove_marked_lines",
+    en_US = "Remove &Marked Lines",
+    ja_JP = "ブックマークされている行を削除(&M)" )
+ckit.strings.setString( "menu_remove_unmarked_lines",
+    en_US = "Remove &Unmarked Lines",
+    ja_JP = "ブックマークされていない行を削除(&U)" )
+ckit.strings.setString( "menu_config_menu",
+    en_US = "&Config",
+    ja_JP = "設定(&C)" )
+ckit.strings.setString( "menu_config_edit",
+    en_US = "&Edit config.py",
+    ja_JP = "config.pyの編集(&E)" )
+ckit.strings.setString( "menu_config_reload",
+    en_US = "&Reload config.py",
+    ja_JP = "config.pyの再読み込み(&R)" )
+
+ckit.strings.setString( "menu_help",
+    en_US = "&Help",
+    ja_JP = "ヘルプ(&H)" )
+ckit.strings.setString( "menu_about",
+    en_US = "&About",
+    ja_JP = "バージョン情報(&A)" )
+
+ckit.strings.setString( "config_menu",
+    en_US = "Configuration Menu",
+    ja_JP = "設定メニュー" )
+ckit.strings.setString( "display_option",
+    en_US = "Display Options",
+    ja_JP = "表示オプション" )
+ckit.strings.setString( "operation_option",
+    en_US = "Operation Options",
+    ja_JP = "操作オプション" )
+ckit.strings.setString( "misc_option",
+    en_US = "Misc Options",
+    ja_JP = "その他のオプション" )
+ckit.strings.setString( "theme",
+    en_US = "Theme",
+    ja_JP = "テーマ" )
+ckit.strings.setString( "font",
+    en_US = "Font",
+    ja_JP = "フォント" )
+ckit.strings.setString( "font_size",
+    en_US = "Font Size",
+    ja_JP = "フォントサイズ" )
+ckit.strings.setString( "visible",
+    en_US = "Visible",
+    ja_JP = "表示" )
+ckit.strings.setString( "invisible",
+    en_US = "Invisible",
+    ja_JP = "非表示" )
+ckit.strings.setString( "menubar",
+    en_US = "Menu Bar",
+    ja_JP = "メニューバー" )
+ckit.strings.setString( "menubar_visibility",
+    en_US = "Menu Bar Visibility",
+    ja_JP = "メニューバーの表示" )
+ckit.strings.setString( "wallpaper",
+    en_US = "Wallpaper",
+    ja_JP = "壁紙" )
+ckit.strings.setString( "wallpaper_visibility",
+    en_US = "Wallpaper Visibility",
+    ja_JP = "壁紙の表示" )
+ckit.strings.setString( "wallpaper_strength",
+    en_US = "Wallpaper Strength",
+    ja_JP = "壁紙の濃さ" )
+ckit.strings.setString( "application_name",
+    en_US = "Application Name",
+    ja_JP = "アプリケーション名" )
+ckit.strings.setString( "locale",
+    en_US = "Display Language",
+    ja_JP = "表示言語" )
+ckit.strings.setString( "locale_en_US",
+    en_US = "English",
+    ja_JP = "英語" )
+ckit.strings.setString( "locale_ja_JP",
+    en_US = "Japanese",
+    ja_JP = "日本語" )
+ckit.strings.setString( "isearch_type",
+    en_US = "Incremental Search Behavior",
+    ja_JP = "インクリメンタルサーチ動作" )
+ckit.strings.setString( "isearch_type_strict",
+    en_US = "Strict     : ABC*",
+    ja_JP = "厳密     : ABC*" )
+ckit.strings.setString( "isearch_type_partial",
+    en_US = "Partial    : *ABC*",
+    ja_JP = "部分一致 : *ABC*" )
+ckit.strings.setString( "isearch_type_inaccurate",
+    en_US = "Inaccurate : *A*B*C*",
+    ja_JP = "あいまい : *A*B*C*" )
+ckit.strings.setString( "isearch_type_migemo",
+    en_US = "Migemo     : *AIUEO*",
+    ja_JP = "Migemo   : *AIUEO*" )
+ckit.strings.setString( "beep_type",
+    en_US = "Beep Sound",
+    ja_JP = "ビープ音" )
+ckit.strings.setString( "beep_type_disabled",
+    en_US = "Diabled",
+    ja_JP = "無効" )
+ckit.strings.setString( "beep_type_enabled",
+    en_US = "Enabled",
+    ja_JP = "有効" )
+ckit.strings.setString( "directory_separator",
+    en_US = "Directory Separator",
+    ja_JP = "ディレクトリ区切り文字" )
+ckit.strings.setString( "directory_separator_slash",
+    en_US = "Slash       : / ",
+    ja_JP = "スラッシュ       : / " )
+ckit.strings.setString( "directory_separator_backslash",
+    en_US = "BackSlash   : \\ ",
+    ja_JP = "バックスラッシュ : \\ " )
+ckit.strings.setString( "drive_case",
+    en_US = "Case of Drive Letter",
+    ja_JP = "ドライブ文字の大文字/小文字" )
+ckit.strings.setString( "drive_case_nocare",
+    en_US = "Don't care",
+    ja_JP = "気にしない" )
+ckit.strings.setString( "drive_case_upper",
+    en_US = "Upper case",
+    ja_JP = "大文字" )
+ckit.strings.setString( "drive_case_lower",
+    en_US = "Lower case",
+    ja_JP = "小文字" )
+ckit.strings.setString( "edit_config",
+    en_US = "Edit config.py",
+    ja_JP = "config.py を編集" )
+ckit.strings.setString( "reload_config",
+    en_US = "Reload config.py",
+    ja_JP = "config.py を再読み込み" )
+
+ckit.strings.setString( "msgbox_title_generic_error",
+    en_US = "Error",
+    ja_JP = "エラー" )
+ckit.strings.setString( "msgbox_title_insert_task",
+    en_US = "Task Order",
+    ja_JP = "タスクの処理順序の確認" )
+ckit.strings.setString( "msgbox_ask_insert_task",
+    en_US = "proceed preferentially?",
+    ja_JP = "優先的に処理を行いますか？" )
+ckit.strings.setString( "msgbox_title_save",
+    en_US = "Save",
+    ja_JP = "保存確認" )
+ckit.strings.setString( "msgbox_ask_save_document",
+    en_US = "Save [%s] ?",
+    ja_JP = "[%s] を保存しますか？" )
+ckit.strings.setString( "msgbox_title_modified_reload",
+    en_US = "Reload",
+    ja_JP = "再読み込み確認" )
+ckit.strings.setString( "msgbox_ask_modified_reload",
+    en_US = "%s is modified from outside. Reload this file?",
+    ja_JP = "%sが外部で変更されています。再読み込みしますか？" )
+ckit.strings.setString( "msgbox_title_wallpaper_error",
+    en_US = "Wallpaper",
+    ja_JP = "壁紙のエラー" )
+ckit.strings.setString( "msgbox_wallpaper_filename_empty",
+    en_US = "Using Wallpaper command, specify the filename of wallpaper.",
+    ja_JP = "Wallpaperコマンドを使って、壁紙ファイルを指定してください。" )
+ckit.strings.setString( "msgbox_title_modified_reopen",
+    en_US = "Reopen",
+    ja_JP = "変更内容破棄の確認" )
+ckit.strings.setString( "msgbox_ask_modified_reopen",
+    en_US = "%s is modified. Is it OK to destroy this modification and reopen this file?",
+    ja_JP = "%sは変更されていますが、開きなおしますか？" )
+ckit.strings.setString( "msgbox_title_new_window",
+    en_US = "New LREdit window",
+    ja_JP = "新規 LREdit ウインドウの確認" )
+ckit.strings.setString( "msgbox_ask_new_window",
+    en_US = "Open a new window?",
+    ja_JP = "新しいウインドウを開きますか？" )
     
-    "menu_file"             : "ファイル(&F)",
-    "menu_new"              : "新規作成(&N)",
-    "menu_open"             : "開く(&O)",
-    "menu_reopen"           : "開き直す(&R)",
-    "menu_close"            : "閉じる(&C)",
-    "menu_project"          : "プロジェクト(&P)",
-    "menu_open_project"     : "開く(&O)",
-    "menu_close_project"    : "閉じる(&C)",
-    "menu_edit_project"     : "編集(&E)",
-    "menu_project_file_list": "プロジェクトファイル一覧(&F)",
-    "menu_save"             : "保存(&S)",
-    "menu_save_as"          : "名前を付けて保存(&A)",
-    "menu_save_all"         : "すべて保存(&L)",
-    "menu_encoding"         : "エンコーディング(&E)",
-    "menu_recent_files"     : "最近のファイル(&I)",
-    "menu_recent_projects"  : "最近のプロジェクト(&J)",
-    "menu_quit"             : "終了(&Q)",
-
-    "menu_edit"         : "編集(&E)",
-    "menu_undo"         : "元に戻す(&U)",
-    "menu_redo"         : "やり直し(&R)",
-    "menu_cut"          : "切り取り(&T)",
-    "menu_copy"         : "コピー(&C)",
-    "menu_paste"        : "貼り付け(&P)",
-    "menu_delete"       : "削除(&D)",
-    "menu_select_all"   : "すべてを選択(&L)",
-    "menu_convert_char" : "文字変換(&V)",
-    "menu_to_upper"     : "大文字化(&U)",
-    "menu_to_lower"     : "小文字化(&L)",
-    "menu_to_zenkaku"   : "全角に変換(&Z)",
-    "menu_to_hankaku"   : "半角に変換(&H)",
-    "menu_complete"     : "単語補完(&W)",
-    "menu_jump_lineno"  : "指定行ジャンプ(&G)",
-
-    "menu_search"       : "検索(&S)",
-    "menu_search_next"  : "次を検索(&N)",
-    "menu_search_prev"  : "前を検索(&P)",
-    "menu_grep"         : "ファイルから検索(&G)",
-    "menu_tags"         : "シンボル検索(&Y)",
-    "menu_tags_jump"    : "定義位置へジャンプ(&J)",
-    "menu_tags_back"    : "ジャンプ元へ戻る(&B)",
-    "menu_load_tags"    : "TAGSの読み込み(&L)",
-    "menu_generate_tags": "TAGSの生成(&G)",
-    "menu_replace"      : "置換(&R)",
-    "menu_compare"      : "比較(&C)",
-
-    "menu_view"             : "表示(&V)",
-    "menu_another_pane"     : "他方のペイン(&A)",
-    "menu_doclist"          : "文書選択(&D)",
-
-    "menu_tool"             : "ツール(&T)",
-    "menu_bookmark_list"    : "ブックマーク一覧(&B)",
-    "menu_bookmark1"        : "ブックマーク1(&1)",
-    "menu_bookmark2"        : "ブックマーク2(&2)",
-    "menu_bookmark3"        : "ブックマーク3(&3)",
-    "menu_bookmark_next"    : "次のブックマークへ(&N)",
-    "menu_bookmark_prev"    : "前のブックマークへ(&P)",
-    "menu_outline"          : "アウトライン(&O)",
-    "menu_expand_tab"       : "タブをスペースに展開(&T)",
-    "menu_remove_trailing_space" : "行末の空白を削除(&S)",
-    "menu_remove_empty_lines" : "空行を削除(&E)",
-    "menu_remove_marked_lines" : "ブックマークされている行を削除(&M)",
-    "menu_remove_unmarked_lines" : "ブックマークされていない行を削除(&U)",
-    "menu_config_menu"      : "設定(&C)",
-    "menu_config_edit"      : "config.pyの編集(&E)",
-    "menu_config_reload"    : "config.pyの再読み込み(&R)",
-
-    "menu_help"             : "ヘルプ(&H)",
-    "menu_about"            : "バージョン情報(&A)",
+ckit.strings.setString( "statusbar_task_reserved",
+    en_US = "Reserved task : %s",
+    ja_JP = "タスクを予約しました : %s" )
+ckit.strings.setString( "statusbar_open_failed",
+    en_US = "Open failed : %s",
+    ja_JP = "オープン失敗 : %s" )
+ckit.strings.setString( "statusbar_switch_doc_failed",
+    en_US = "Wwitching document failed : %s",
+    ja_JP = "ドキュメント切り替え失敗 : %s" )
+ckit.strings.setString( "statusbar_regex_wrong",
+    en_US = "Regular expression [%s] is wrong.",
+    ja_JP = "正規表現 [%s] に誤りがあります." )
+ckit.strings.setString( "statusbar_aborted",
+    en_US = "Aborted Task.",
+    ja_JP = "タスクを中断しました." )
+ckit.strings.setString( "statusbar_grep_finished",
+    en_US = "Grep : found %d lines.",
+    ja_JP = "Grep : %d 件ヒットしました." )
+ckit.strings.setString( "statusbar_replace_finished",
+    en_US = "Replace : Replaced %d places.",
+    ja_JP = "Replace : %d 箇所置換しました." )
+ckit.strings.setString( "statusbar_not_saved",
+    en_US = "Not saved.",
+    ja_JP = "ファイルが保存されていません." )
+ckit.strings.setString( "statusbar_jump_failed",
+    en_US = "Jump failed.",
+    ja_JP = "ジャンプできません." )
+ckit.strings.setString( "statusbar_symbol_not_found",
+    en_US = "Symbol [%s] is not found.",
+    ja_JP = "シンボル [%s] の定義位置が見つかりません." )
+ckit.strings.setString( "statusbar_tags_generating",
+    en_US = "Generating Tags.",
+    ja_JP = "Tags ファイルを生成中." )
+ckit.strings.setString( "statusbar_tags_generated",
+    en_US = "Generated Tags.",
+    ja_JP = "Tags ファイルを生成しました." )
+ckit.strings.setString( "statusbar_tags_loading",
+    en_US = "Loading Tags.",
+    ja_JP = "Tags ロード中." )
+ckit.strings.setString( "statusbar_tags_loaded",
+    en_US = "Loaded Tags.",
+    ja_JP = "Tags ファイルをロードしました." )
+ckit.strings.setString( "statusbar_project_opened",
+    en_US = "Opened project file : %s",
+    ja_JP = "プロジェクトファイルをオープンしました : %s" )
+ckit.strings.setString( "statusbar_project_closed",
+    en_US = "Closed project file.",
+    ja_JP = "プロジェクトファイルをクローズしました." )
     
-    "config_menu"                   : "設定メニュー",
-    "display_option"                : "表示オプション",
-    "operation_option"              : "操作オプション",
-    "misc_option"                   : "その他のオプション",
-    "theme"                         : "テーマ",
-    "font"                          : "フォント",
-    "font_size"                     : "フォントサイズ",
-    "visible"                       : "表示",
-    "invisible"                     : "非表示",
-    "menubar"                       : "メニューバー",
-    "menubar_visibility"            : "メニューバーの表示",
-    "wallpaper"                     : "壁紙",
-    "wallpaper_visibility"          : "壁紙の表示",
-    "wallpaper_strength"            : "壁紙の濃さ",
-    "application_name"              : "アプリケーション名",
-    "locale"                        : "表示言語",
-    "locale_en_US"                  : "英語",
-    "locale_ja_JP"                  : "日本語",
-    "isearch_type"                  : "インクリメンタルサーチ動作",
-    "isearch_type_strict"           : "厳密     : ABC*",
-    "isearch_type_partial"          : "部分一致 : *ABC*",
-    "isearch_type_inaccurate"       : "あいまい : *A*B*C*",
-    "isearch_type_migemo"           : "Migemo   : *AIUEO*",
-    "beep_type"                     : "ビープ音",
-    "beep_type_disabled"            : "無効",
-    "beep_type_enabled"             : "有効",
-    "directory_separator"           : "ディレクトリ区切り文字",
-    "directory_separator_slash"     : "スラッシュ       : / ",
-    "directory_separator_backslash" : "バックスラッシュ : \\ ",
-    "drive_case"                    : "ドライブ文字の大文字/小文字",
-    "drive_case_nocare"             : "気にしない",
-    "drive_case_upper"              : "大文字",
-    "drive_case_lower"              : "小文字",
-    "edit_config"                   : "config.py を編集",
-    "reload_config"                 : "config.py を再読み込み",
-    
-    "msgbox_title_generic_error"    : "エラー",
-    "msgbox_title_insert_task"      : "タスクの処理順序の確認",
-    "msgbox_ask_insert_task"        : "優先的に処理を行いますか？",
-    "msgbox_title_save"             : "保存確認",
-    "msgbox_ask_save_document"      : "[%s] を保存しますか？",
-    "msgbox_title_modified_reload"  : "再読み込み確認",
-    "msgbox_ask_modified_reload"    : "%sが外部で変更されています。再読み込みしますか？",
-    "msgbox_title_wallpaper_error"  : "壁紙のエラー",
-    "msgbox_wallpaper_filename_empty" : "Wallpaperコマンドを使って、壁紙ファイルを指定してください。",
-    "msgbox_title_modified_reopen"  : "変更内容破棄の確認",
-    "msgbox_ask_modified_reopen"    : "%sは変更されていますが、開きなおしますか？",
-    "msgbox_title_new_window"       : "新規 LREdit ウインドウの確認",
-    "msgbox_ask_new_window"         : "新しいウインドウを開きますか？",
-    
-    "statusbar_task_reserved"       : "タスクを予約しました : %s",
-    "statusbar_open_failed"         : "オープン失敗 : %s",
-    "statusbar_switch_doc_failed"   : "ドキュメント切り替え失敗 : %s",
-    "statusbar_regex_wrong"         : "正規表現 [%s] に誤りがあります.",
-    "statusbar_aborted"             : "タスクを中断しました.",
-    "statusbar_grep_finished"       : "Grep : %d 件ヒットしました.",
-    "statusbar_replace_finished"    : "Replace : %d 箇所置換しました.",
-    "statusbar_not_saved"           : "ファイルが保存されていません.",
-    "statusbar_jump_failed"         : "ジャンプできません.",
-    "statusbar_symbol_not_found"    : "シンボル [%s] の定義位置が見つかりません.",
-    "statusbar_tags_generating"     : "Tags ファイルを生成中.",
-    "statusbar_tags_generated"      : "Tags ファイルを生成しました.",
-    "statusbar_tags_loading"        : "Tags ロード中.",
-    "statusbar_tags_loaded"         : "Tags ファイルをロードしました.",
-    "statusbar_project_opened"      : "プロジェクトファイルをオープンしました : %s",
-    "statusbar_project_closed"      : "プロジェクトファイルをクローズしました.",
-    
-    "not_textfile"                          : "テキストファイルではありません.",
-    "saving"                                : "保存中...",
-    "memory_statistics"                     : "メモリ統計情報",
-    "config_reloaded"                       : "設定スクリプトをリロードしました.",
-    "project_reloaded"                      : "プロジェクトファイルをリロードしました.",
-    "help_opening"                          : "Helpを起動",
-    "project_not_opened"                    : "プロジェクトファイルがオープンされていません.",
-    "mode_not_found"                        : "モード [%s] が見つかりません.",
-    "mode_enabled"                          : "モード [%s] を有効にしました.",
-    "mode_disabled"                         : "モード [%s] を無効にしました.",
-    
-    "error_prefix"                  : "ERROR : ",
-    "error_already_exists"          : "ERROR : すでに存在しています.",
-    "error_ini_file_load_failed"    : "ERROR : INIファイルの読み込み中にエラーが発生しました.",
-    "error_connection_failed"       : "ERROR : 接続失敗 : %s",
-    "error_open_failed"             : "ERROR : オープン失敗 : %s",
-    "error_load_failed"             : "ERROR : ロード失敗 : %s",
-    "error_out_of_memory"           : "ERROR : メモリ不足 : %s",
-    "error_invalid_wallpaper"       : "ERROR : 壁紙ファイルとして使用できない : %s",
-    "error_unknown_parameter"       : "ERROR : 不明なパラメタ : %s",
-    "error_unknown_encoding"        : "ERROR : 不明なエンコーディング名 : %s",
-    "error_unknown_lineend"         : "ERROR : 不明な改行コード : %s",
-}
+ckit.strings.setString( "not_textfile",
+    en_US = "Not a text file.",
+    ja_JP = "テキストファイルではありません." )
+ckit.strings.setString( "saving",
+    en_US = "Saving...",
+    ja_JP = "保存中..." )
+ckit.strings.setString( "memory_statistics",
+    en_US = "Memory Statistics",
+    ja_JP = "メモリ統計情報" )
+ckit.strings.setString( "config_reloaded",
+    en_US = "Config file reloaded.",
+    ja_JP = "設定スクリプトをリロードしました." )
+ckit.strings.setString( "project_reloaded",
+    en_US = "Project file reloaded.",
+    ja_JP = "プロジェクトファイルをリロードしました." )
+ckit.strings.setString( "help_opening",
+    en_US = "Opening Help...",
+    ja_JP = "Helpを起動" )
+ckit.strings.setString( "project_not_opened",
+    en_US = "Project is not opened.",
+    ja_JP = "プロジェクトファイルがオープンされていません." )
+ckit.strings.setString( "mode_not_found",
+    en_US = "Mode [%s] is not found.",
+    ja_JP = "モード [%s] が見つかりません." )
+ckit.strings.setString( "mode_enabled",
+    en_US = "Mode [%s] is enabled.",
+    ja_JP = "モード [%s] を有効にしました." )
+ckit.strings.setString( "mode_disabled",
+    en_US = "Mode [%s] is disabled.",
+    ja_JP = "モード [%s] を無効にしました." )
 
-strings_en = {
-    "common_yes"        : "Yes",
-    "common_no"         : "No",
-    "common_done"       : "Done.",
-    "common_aborted"    : "Aborted.",
-    "common_failed"     : "Failed.",
+ckit.strings.setString( "error_prefix",
+    en_US = "ERROR : ",
+    ja_JP = "ERROR : " )
+ckit.strings.setString( "error_already_exists",
+    en_US = "ERROR : Already exists.",
+    ja_JP = "ERROR : すでに存在しています." )
+ckit.strings.setString( "error_ini_file_load_failed",
+    en_US = "ERROR : loading INI file failed.",
+    ja_JP = "ERROR : INIファイルの読み込み中にエラーが発生しました." )
+ckit.strings.setString( "error_connection_failed",
+    en_US = "ERROR : Connection failed : %s",
+    ja_JP = "ERROR : 接続失敗 : %s" )
+ckit.strings.setString( "error_open_failed",
+    en_US = "ERROR : Open failed : %s",
+    ja_JP = "ERROR : オープン失敗 : %s" )
+ckit.strings.setString( "error_load_failed",
+    en_US = "ERROR : Load failed : %s",
+    ja_JP = "ERROR : ロード失敗 : %s" )
+ckit.strings.setString( "error_out_of_memory",
+    en_US = "ERROR : Out of memory : %s",
+    ja_JP = "ERROR : メモリ不足 : %s" )
+ckit.strings.setString( "error_invalid_wallpaper",
+    en_US = "ERROR : Invalid wallpaper file : %s",
+    ja_JP = "ERROR : 壁紙ファイルとして使用できない : %s" )
+ckit.strings.setString( "error_unknown_parameter",
+    en_US = "ERROR : Unknown parameter : %s",
+    ja_JP = "ERROR : 不明なパラメタ : %s" )
+ckit.strings.setString( "error_unknown_encoding",
+    en_US = "ERROR : Unknown encording name : %s",
+    ja_JP = "ERROR : 不明なエンコーディング名 : %s" )
+ckit.strings.setString( "error_unknown_lineend",
+    en_US = "ERROR : Unknown line end name : %s",
+    ja_JP = "ERROR : 不明な改行コード : %s" )
 
-    "menu_file"             : "&File",
-    "menu_new"              : "&New",
-    "menu_open"             : "&Open",
-    "menu_reopen"           : "&Reopen",
-    "menu_close"            : "&Close",
-    "menu_project"          : "&Project",
-    "menu_open_project"     : "&Open",
-    "menu_close_project"    : "&Close",
-    "menu_edit_project"     : "&Edit",
-    "menu_project_file_list": "Project &File List",
-    "menu_save"             : "&Save",
-    "menu_save_as"          : "Save &As",
-    "menu_save_all"         : "Save A&ll",
-    "menu_encoding"         : "&Encoding",
-    "menu_recent_files"     : "Recent F&iles",
-    "menu_recent_projects"  : "Recent Pro&jects",
-    "menu_quit"             : "&Quit",
-
-    "menu_edit"         : "&Edit",
-    "menu_undo"         : "&Undo",
-    "menu_redo"         : "&Redo",
-    "menu_cut"          : "Cu&t",
-    "menu_copy"         : "&Copy",
-    "menu_paste"        : "&Paste",
-    "menu_delete"       : "&Delete",
-    "menu_select_all"   : "Select A&ll",
-    "menu_convert_char" : "Con&vert",
-    "menu_to_upper"     : "&Uppercase",
-    "menu_to_lower"     : "&Lowercase",
-    "menu_to_zenkaku"   : "&Zenkaku",
-    "menu_to_hankaku"   : "&Hankaku",
-    "menu_complete"     : "&Word Completion",
-    "menu_jump_lineno"  : "&Goto Line",
-
-    "menu_search"       : "&Search",
-    "menu_search_next"  : "Search &Next",
-    "menu_search_prev"  : "Search &Prev",
-    "menu_grep"         : "&Grep",
-    "menu_tags"         : "S&ymbol Search",
-    "menu_tags_jump"    : "&Jump to Definition",
-    "menu_tags_back"    : "&Back to Original Position",
-    "menu_load_tags"    : "&Load TAGS",
-    "menu_generate_tags": "&Generate TAGS",
-    "menu_replace"      : "&Replace",
-    "menu_compare"      : "&Compare",
-
-    "menu_view"         : "&View",
-    "menu_another_pane" : "&Another Pane",
-    "menu_doclist"      : "&Document List",
-
-    "menu_tool"             : "&Tool",
-    "menu_bookmark_list"    : "&Bookmark List",
-    "menu_bookmark1"        : "Bookmark&1",
-    "menu_bookmark2"        : "Bookmark&2",
-    "menu_bookmark3"        : "Bookmark&3",
-    "menu_bookmark_next"    : "&Next Bookmark",
-    "menu_bookmark_prev"    : "&Prev Bookmark",
-    "menu_outline"          : "&Outline",
-    "menu_expand_tab"       : "Expand &Tab",
-    "menu_remove_trailing_space" : "Remove Trailing &Space",
-    "menu_remove_empty_lines" : "Remove &Empty Lines",
-    "menu_remove_marked_lines" : "Remove &Marked Lines",
-    "menu_remove_unmarked_lines" : "Remove &Unmarked Lines",
-    "menu_config_menu"      : "&Config",
-    "menu_config_edit"      : "&Edit config.py",
-    "menu_config_reload"    : "&Reload config.py",
-
-    "menu_help"             : "&Help",
-    "menu_about"            : "&About",
-
-    "config_menu"                   : "Configuration Menu",
-    "display_option"                : "Display Options",
-    "operation_option"              : "Operation Options",
-    "misc_option"                   : "Misc Options",
-    "theme"                         : "Theme",
-    "font"                          : "Font",
-    "font_size"                     : "Font Size",
-    "visible"                       : "Visible",
-    "invisible"                     : "Invisible",
-    "menubar"                       : "Menu Bar",
-    "menubar_visibility"            : "Menu Bar Visibility",
-    "wallpaper"                     : "Wallpaper",
-    "wallpaper_visibility"          : "Wallpaper Visibility",
-    "wallpaper_strength"            : "Wallpaper Strength",
-    "application_name"              : "Application Name",
-    "locale"                        : "Display Language",
-    "locale_en_US"                  : "English",
-    "locale_ja_JP"                  : "Japanese",
-    "isearch_type"                  : "Incremental Search Behavior",
-    "isearch_type_strict"           : "Strict     : ABC*",
-    "isearch_type_partial"          : "Partial    : *ABC*",
-    "isearch_type_inaccurate"       : "Inaccurate : *A*B*C*",
-    "isearch_type_migemo"           : "Migemo     : *AIUEO*",
-    "beep_type"                     : "Beep Sound",
-    "beep_type_disabled"            : "Diabled",
-    "beep_type_enabled"             : "Enabled",
-    "directory_separator"           : "Directory Separator",
-    "directory_separator_slash"     : "Slash       : / ",
-    "directory_separator_backslash" : "BackSlash   : \\ ",
-    "drive_case"                    : "Case of Drive Letter",
-    "drive_case_nocare"             : "Don't care",
-    "drive_case_upper"              : "Upper case",
-    "drive_case_lower"              : "Lower case",
-    "edit_config"                   : "Edit config.py",
-    "reload_config"                 : "Reload config.py",
-
-    "msgbox_title_generic_error"    : "Error",
-    "msgbox_title_insert_task"      : "Task Order",
-    "msgbox_ask_insert_task"        : "proceed preferentially?",
-    "msgbox_title_save"             : "Save",
-    "msgbox_ask_save_document"      : "Save [%s] ?",
-    "msgbox_title_modified_reload"  : "Reload",
-    "msgbox_ask_modified_reload"    : "%s is modified from outside. Reload this file?",
-    "msgbox_title_wallpaper_error"  : "Wallpaper",
-    "msgbox_wallpaper_filename_empty" : "Using Wallpaper command, specify the filename of wallpaper.",
-    "msgbox_title_modified_reopen"  : "Reopen",
-    "msgbox_ask_modified_reopen"    : "%s is modified. Is it OK to destroy this modification and reopen this file?",
-    "msgbox_title_new_window"       : "New LREdit window",
-    "msgbox_ask_new_window"         : "Open a new window?",
-    
-    "statusbar_task_reserved"       : "Reserved task : %s",
-    "statusbar_open_failed"         : "Open failed : %s",
-    "statusbar_switch_doc_failed"   : "Wwitching document failed : %s",
-    "statusbar_regex_wrong"         : "Regular expression [%s] is wrong.",
-    "statusbar_aborted"             : "Aborted Task.",
-    "statusbar_grep_finished"       : "Grep : found %d lines.",
-    "statusbar_replace_finished"    : "Replace : Replaced %d places.",
-    "statusbar_not_saved"           : "Not saved.",
-    "statusbar_jump_failed"         : "Jump failed.",
-    "statusbar_symbol_not_found"    : "Symbol [%s] is not found.",
-    "statusbar_tags_generating"     : "Generating Tags.",
-    "statusbar_tags_generated"      : "Generated Tags.",
-    "statusbar_tags_loading"        : "Loading Tags.",
-    "statusbar_tags_loaded"         : "Loaded Tags.",
-    "statusbar_project_opened"      : "Opened project file : %s",
-    "statusbar_project_closed"      : "Closed project file.",
-    
-    "not_textfile"                          : "Not a text file.",
-    "saving"                                : "Saving...",
-    "memory_statistics"                     : "Memory Statistics",
-    "config_reloaded"                       : "Config file reloaded.",
-    "project_reloaded"                      : "Project file reloaded.",
-    "help_opening"                          : "Opening Help...",
-    "project_not_opened"                    : "Project is not opened.",
-    "mode_not_found"                        : "Mode [%s] is not found.",
-    "mode_enabled"                          : "Mode [%s] is enabled.",
-    "mode_disabled"                         : "Mode [%s] is disabled.",
-
-    "error_prefix"                  : "ERROR : ",
-    "error_already_exists"          : "ERROR : Already exists.",
-    "error_ini_file_load_failed"    : "ERROR : loading INI file failed.",
-    "error_connection_failed"       : "ERROR : Connection failed : %s",
-    "error_open_failed"             : "ERROR : Open failed : %s",
-    "error_load_failed"             : "ERROR : Load failed : %s",
-    "error_out_of_memory"           : "ERROR : Out of memory : %s",
-    "error_invalid_wallpaper"       : "ERROR : Invalid wallpaper file : %s",
-    "error_unknown_parameter"       : "ERROR : Unknown parameter : %s",
-    "error_unknown_encoding"        : "ERROR : Unknown encording name : %s",
-    "error_unknown_lineend"         : "ERROR : Unknown line end name : %s",
-}
-
-ckit.strings_ja.update(strings_ja)
-ckit.strings_en.update(strings_en)
 
 def setLocale(locale):
-    ckit.setLocale(locale)
+    ckit.strings.setLocale(locale)
 
