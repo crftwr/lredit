@@ -16,14 +16,11 @@ import argparse
 import json
 import ctypes
 import time
-import locale
 
 import ckit
 import pyauto
 
 import lredit_resource
-
-lredit_resource.setLocale( locale.getdefaultlocale()[0] )
 
 #--------------------------------------------------------------------
 
