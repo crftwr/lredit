@@ -15,3 +15,5 @@ lredit_native/lredit_native.suo
 lredit_native/lredit_native.v12.suo
 lredit_native/lredit_native.vcxproj.user
 tags
+lredit_native.pyd
+lredit_native/lredit_native.VC.opendb
