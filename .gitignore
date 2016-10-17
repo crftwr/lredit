@@ -17,3 +17,9 @@ lredit_native/lredit_native.vcxproj.user
 tags
 lredit_native.pyd
 lredit_native/lredit_native.VC.opendb
+lredit.VC.opendb
+Debug/
+build/
+lib/
+Release/
+library.zip

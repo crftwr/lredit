@@ -3,19 +3,26 @@
 
 import sys
 import os
-
-os.environ["PATH"] = os.path.join( os.path.split(sys.argv[0])[0], 'lib' ) + ";" + os.environ["PATH"]
-
-sys.path[0:0] = [
-    os.path.join( os.path.split(sys.argv[0])[0], '..' ),
-    os.path.join( os.path.split(sys.argv[0])[0], 'extension' ),
-    os.path.join( os.path.split(sys.argv[0])[0], 'lib' ),
-    ]
-
 import argparse
 import json
 import ctypes
 import time
+
+import importlib.abc
+    
+class CustomPydFinder(importlib.abc.MetaPathFinder):
+    def find_module( self, fullname, path=None ):
+        pyd_filename_body = fullname.split(".")[-1]
+        pyd_fullpath = os.path.exists( "./lib/" + pyd_filename_body + ".pyd" )
+        if pyd_fullpath:
+            for importer in sys.meta_path:
+                if isinstance(importer, self.__class__):
+                    continue
+                loader = importer.find_module( fullname, None)
+                if loader:
+                    return loader
+
+sys.meta_path.append(CustomPydFinder())
 
 import ckit
 import pyauto
@@ -161,61 +168,59 @@ import lredit_debug
 import lredit_misc
 
 
-if __name__ == "__main__":
+ckit.registerWindowClass( "Lredit" )
+ckit.registerCommandInfoConstructor( ckit.CommandInfo )
 
-    ckit.registerWindowClass( "Lredit" )
-    ckit.registerCommandInfoConstructor( ckit.CommandInfo )
+# exeと同じ位置にある設定ファイルを優先する
+if os.path.exists( os.path.join( ckit.getAppExePath(), 'config.py' ) ):
+    ckit.setDataPath( ckit.getAppExePath() )
+else:
+    ckit.setDataPath( os.path.join( ckit.getAppDataPath(), lredit_resource.lredit_dirname ) )
+    if not os.path.exists(ckit.dataPath()):
+        os.mkdir(ckit.dataPath())
 
-    # exeと同じ位置にある設定ファイルを優先する
-    if os.path.exists( os.path.join( ckit.getAppExePath(), 'config.py' ) ):
-        ckit.setDataPath( ckit.getAppExePath() )
-    else:
-        ckit.setDataPath( os.path.join( ckit.getAppDataPath(), lredit_resource.lredit_dirname ) )
-        if not os.path.exists(ckit.dataPath()):
-            os.mkdir(ckit.dataPath())
+default_config_filename = os.path.join( ckit.getAppExePath(), '_config.py' )
+config_filename = os.path.join( ckit.dataPath(), 'config.py' )
+ini_filename = os.path.join( ckit.dataPath(), 'lredit.ini' )
 
-    default_config_filename = os.path.join( ckit.getAppExePath(), '_config.py' )
-    config_filename = os.path.join( ckit.dataPath(), 'config.py' )
-    ini_filename = os.path.join( ckit.dataPath(), 'lredit.ini' )
+# config.py がどこにもない場合は作成する
+if not os.path.exists(config_filename) and os.path.exists(default_config_filename):
+    shutil.copy( default_config_filename, config_filename )
 
-    # config.py がどこにもない場合は作成する
-    if not os.path.exists(config_filename) and os.path.exists(default_config_filename):
-        shutil.copy( default_config_filename, config_filename )
+_main_window = lredit_mainwindow.MainWindow(
+    config_filename = config_filename,
+    ini_filename = ini_filename,
+    debug = args.debug,
+    profile = args.profile )
 
-    _main_window = lredit_mainwindow.MainWindow(
-        config_filename = config_filename,
-        ini_filename = ini_filename,
-        debug = args.debug,
-        profile = args.profile )
+_main_window.registerStdio()
 
-    _main_window.registerStdio()
+ckit.initTemp("lredit_")
 
-    ckit.initTemp("lredit_")
+_main_window.configure()
 
-    _main_window.configure()
+_main_window.startup(arg_data)
 
-    _main_window.startup(arg_data)
+_main_window.messageLoop( name="top" )
 
-    _main_window.messageLoop( name="top" )
+_main_window.saveState()
 
-    _main_window.saveState()
+lredit_debug.enableExitTimeout()
 
-    lredit_debug.enableExitTimeout()
+_main_window.unregisterStdio()
 
-    _main_window.unregisterStdio()
+ckit.JobQueue.cancelAll()
+ckit.JobQueue.joinAll()
 
-    ckit.JobQueue.cancelAll()
-    ckit.JobQueue.joinAll()
+ckit.destroyTemp()
 
-    ckit.destroyTemp()
+_main_window.destroy()
 
-    _main_window.destroy()
+lredit_debug.disableExitTimeout()
 
-    lredit_debug.disableExitTimeout()
+ctypes.windll.kernel32.CloseHandle(instance_mutex)
 
-    ctypes.windll.kernel32.CloseHandle(instance_mutex)
-
-    # スレッドが残っていても強制終了
-    if not args.debug:
-        os._exit(0)
+# スレッドが残っていても強制終了
+if not args.debug:
+    os._exit(0)
 
