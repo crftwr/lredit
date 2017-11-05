@@ -23,3 +23,15 @@ build/
 lib/
 Release/
 library.zip
+lredit.aps
+python36.dll
+lredit_d.pdb
+lredit_d.ilk
+lredit_d.exe
+lredit.vcxproj.user
+lredit.sdf
+lredit.pdb
+lredit.ipdb
+lredit.iobj
+lredit.exe
+.vs/
