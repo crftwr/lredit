@@ -2495,8 +2495,8 @@ class MainWindow( ckit.TextWindow ):
             (doc and self.right_edit_pane.edit and doc==self.right_edit_pane.edit.doc)):
             self.paint( REGION_RIGHT_FOOTER )
         self.updateTitleBar()
-
-    def _onDocumentTextModified( self, edit, left, old_right, new_right ):
+    
+    def onDocumentTextModified( self, edit, left, old_right, new_right ):
 
         # 編集内容にジャンプリストの行番号を追従させる
         if old_right.line != new_right.line:
@@ -2528,8 +2528,8 @@ class MainWindow( ckit.TextWindow ):
 
         edit.setDocument(doc)
         self.loadBookmarkList(edit)
-
-        edit.doc.text_modified_handler_list.append( self._onDocumentTextModified )
+    
+        edit.doc.addReference(self)
         edit.selection_changed_handler_list.append( self._onEditSelectionChanged )
 
         edit.configure()
