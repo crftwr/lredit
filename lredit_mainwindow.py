@@ -4912,26 +4912,22 @@ class MainWindow( ckit.TextWindow ):
             elif option.lower() == "Ignore.WhiteSpace".lower():
                 ignore_whitespace = True
 
-        if ignore_whitespace:
-            for line in self.left_edit_pane.edit.doc.lines:
-                s = re.sub( "[ \t]+", "", line.s )
-                left_lines.append(s)
+        # FIXME : 巨大ファイルに対応
 
-            for line in self.right_edit_pane.edit.doc.lines:
-                s = re.sub( "[ \t]+", "", line.s )
-                right_lines.append(s)
-        else:
-            for line in self.left_edit_pane.edit.doc.lines:
-                left_lines.append(line.s)
+        def listLines( lines ):
+            hashed_lines = []
+            for line in lines:
+                s = line.s
+                if ignore_whitespace:
+                    s = re.sub( "[ \t]+", "", s )
+                if ignore_case:
+                    s = s.lower()
+                hashed_lines.append(s)
+            return hashed_lines
 
-            for line in self.right_edit_pane.edit.doc.lines:
-                right_lines.append(line.s)
-
-        if ignore_case:
-            left_lines = list(map( lambda s : s.lower(), left_lines ))
-            right_lines = list(map( lambda s : s.lower(), right_lines ))
-
-
+        left_lines = listLines(self.left_edit_pane.edit.doc.lines)
+        right_lines = listLines(self.right_edit_pane.edit.doc.lines)
+        
         diff_object = difflib.unified_diff( left_lines, right_lines, self.left_edit_pane.edit.doc.getName(), self.right_edit_pane.edit.doc.getName(), n=0 )
 
         color = 1

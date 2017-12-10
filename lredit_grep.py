@@ -7,9 +7,6 @@ import ckit
 import lredit_resource
 
 
-# ！！！ 現在使われていない ！！！
-
-
 def grep( job_item, enum_files, pattern, word=False, case=False, regex=False, found_handler=None ):
 
     if regex:
@@ -41,6 +38,9 @@ def grep( job_item, enum_files, pattern, word=False, case=False, regex=False, fo
             fd = open( fullpath, "rb" )
 
             try:
+                
+                # FIXME : 巨大ファイルに対応するべき
+            
                 data = fd.read()
             
                 encoding = ckit.detectTextEncoding( data, ascii_as="utf-8" )
