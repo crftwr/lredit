@@ -1,13 +1,13 @@
-PythonƒXƒNƒŠƒvƒg‚ÅŠg’£‰Â”\‚ÈƒeƒLƒXƒgƒGƒfƒBƒ^ [ LREdit ]
+ï»¿Pythonã‚¹ã‚¯ãƒªãƒ—ãƒˆã§æ‹¡å¼µå¯èƒ½ãªãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ‡ã‚£ã‚¿ [ LREdit ]
 
-’˜ìÒ: craftware
-˜A—æ: craftware@gmail.com
-ŠJ”­ŠÂ‹«: Python + VC2010
-í•Ê: ƒtƒŠ[ƒEƒFƒA
-“®ìŠÂ‹«: Windows XP/Vista/7/8
-WebƒTƒCƒg: http://sites.google.com/site/craftware/
+è‘—ä½œè€…: craftware
+é€£çµ¡å…ˆ: craftware@gmail.com
+é–‹ç™ºç’°å¢ƒ: Python + VC2015
+ç¨®åˆ¥: ãƒ•ãƒªãƒ¼ã‚¦ã‚§ã‚¢
+å‹•ä½œç’°å¢ƒ: Windows XP/Vista/7/8/10
+Webã‚µã‚¤ãƒˆ: http://sites.google.com/site/craftware/
 
 
-Ú×‚É‚Â‚¢‚Ä‚ÍAƒhƒLƒ…ƒƒ“ƒg‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+è©³ç´°ã«ã¤ã„ã¦ã¯ã€ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
 doc/ja/index.html
 
