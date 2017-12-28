@@ -64,123 +64,6 @@ static PyObject * Error;
 
 // ----------------------------------------------------------------------------
 
-static int LockFile_init( PyObject * self, PyObject * args, PyObject * kwds)
-{
-	PyObject * pypath;
-
-    static char * kwlist[] = {
-        "path",
-        NULL
-    };
-
-    if(!PyArg_ParseTupleAndKeywords( args, kwds, "O", kwlist,
-        &pypath
-    ))
-    {
-        return -1;
-	}
-
-	std::wstring path;
-	PythonUtil::PyStringToWideString( pypath, &path );
-
-	HANDLE handle = CreateFile(
-		path.c_str(), 
-		GENERIC_READ, 
-		FILE_SHARE_READ, 
-		NULL,
-		OPEN_EXISTING, 
-		FILE_ATTRIBUTE_NORMAL, 
-		NULL
-	);
-
-	if(handle==INVALID_HANDLE_VALUE)
-	{
-		PyErr_SetFromWindowsErr(0);
-		return -1;
-	}
-	
-    ((LockFile_Object*)self)->handle = handle;
-	
-	return 0;
-}
-
-static void LockFile_dealloc(PyObject* self)
-{
-	FUNC_TRACE;
-
-	CloseHandle(((LockFile_Object*)self)->handle);
-	((LockFile_Object*)self)->handle = INVALID_HANDLE_VALUE;
-
-    self->ob_type->tp_free(self);
-}
-
-static PyObject * LockFile_unlock( PyObject * self, PyObject * args )
-{
-	if( ! PyArg_ParseTuple(args,"") )
-		return NULL;
-
-	BOOL result = CloseHandle( ((LockFile_Object*)self)->handle );
-	if(!result)
-	{
-		PyErr_SetFromWindowsErr(0);
-		return NULL;
-	}
-	
-	((LockFile_Object*)self)->handle = INVALID_HANDLE_VALUE;
-
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-
-static PyMethodDef LockFile_methods[] = {
-    { "unlock", LockFile_unlock, METH_VARARGS, "" },
-    {NULL,NULL}
-};
-
-PyTypeObject LockFile_Type = {
-    PyVarObject_HEAD_INIT(NULL,0)
-    "LockFile",		/* tp_name */
-    sizeof(LockFile_Object), /* tp_basicsize */
-    0,					/* tp_itemsize */
-    (destructor)LockFile_dealloc,/* tp_dealloc */
-    0,					/* tp_print */
-    0,					/* tp_getattr */
-    0,					/* tp_setattr */
-    0,					/* tp_compare */
-    0, 					/* tp_repr */
-    0,					/* tp_as_number */
-    0,					/* tp_as_sequence */
-    0,					/* tp_as_mapping */
-    0,					/* tp_hash */
-    0,					/* tp_call */
-    0,					/* tp_str */
-    PyObject_GenericGetAttr,/* tp_getattro */
-    PyObject_GenericSetAttr,/* tp_setattro */
-    0,					/* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,/* tp_flags */
-    "",					/* tp_doc */
-    0,					/* tp_traverse */
-    0,					/* tp_clear */
-    0,					/* tp_richcompare */
-    0,					/* tp_weaklistoffset */
-    0,					/* tp_iter */
-    0,					/* tp_iternext */
-    LockFile_methods,	/* tp_methods */
-    0,					/* tp_members */
-    0,					/* tp_getset */
-    0,					/* tp_base */
-    0,					/* tp_dict */
-    0,					/* tp_descr_get */
-    0,					/* tp_descr_set */
-    0,					/* tp_dictoffset */
-    LockFile_init,		/* tp_init */
-    0,					/* tp_alloc */
-    PyType_GenericNew,	/* tp_new */
-    0,					/* tp_free */
-};
-
-// ----------------------------------------------------------------------------
-
 struct FindFileCacheInfo
 {
 	std::wstring filename;
@@ -1232,15 +1115,10 @@ extern "C" PyMODINIT_FUNC PyInit_lredit_native(void)
 	CoInitialize(NULL);
 	OleInitialize(NULL);
 	
-    if( PyType_Ready(&LockFile_Type)<0 ) return NULL;
-
     PyObject *m, *d;
 
     m = PyModule_Create(&redit_native_module);
     if(m == NULL) return NULL;
-
-    Py_INCREF(&LockFile_Type);
-    PyModule_AddObject( m, "LockFile", (PyObject*)&LockFile_Type );
 
     d = PyModule_GetDict(m);
 
