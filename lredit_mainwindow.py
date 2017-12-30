@@ -5063,7 +5063,7 @@ class MainWindow( ckit.TextWindow ):
         if self.grep_dirname_exclude_pattern_history.items : dirname_exclude_pattern = self.grep_dirname_exclude_pattern_history.items[0]
 
         # 再帰的に検索するか
-        recursive = bool(self.ini.get( "GREP", "recursive" ))
+        recursive = bool(self.ini.getint( "GREP", "recursive" ))
 
 
         def isTargetDirectory(dialog):
