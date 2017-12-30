@@ -2622,7 +2622,10 @@ class MainWindow( ckit.TextWindow ):
             # ファイル名からDocumentを作る
             try:
                 if doc==None:
+            
+                    # FIXME : 大きなファイルのために subThreadCall を使うべき
                     doc = ckit.Document( filename=filename, mode=self.createModeFromFilename(filename) )
+            
             except IOError as e:
                 print( ckit.strings["error_open_failed"] % filename )
                 self.setStatusMessage( ckit.strings["statusbar_open_failed"] % filename, 3000, error=True )
@@ -2819,7 +2822,10 @@ class MainWindow( ckit.TextWindow ):
 
                     if result==lredit_msgbox.MSGBOX_RESULT_YES:
                         filename = doc.getFullpath()
+                        
+                        # FIXME : 大きなファイルのために subThreadCall を使うべき
                         doc = ckit.Document( filename=filename, mode=self.createModeFromFilename(filename) )
+                        
                         edit.setDocument(doc)
                     else:
                         doc.clearFileModified()
@@ -4242,8 +4248,7 @@ class MainWindow( ckit.TextWindow ):
             else:
                 return
         
-        # FIXME : オフロード対応が必要
-        
+        # FIXME : subThreadCall を使うべき
         fd = open( filename, "rb" )
         doc.readFile( fd, encoding[1] )
         fd.close()
