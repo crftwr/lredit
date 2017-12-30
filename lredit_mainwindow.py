@@ -2713,6 +2713,7 @@ class MainWindow( ckit.TextWindow ):
         pane.edit = None
         self.edit_list.remove(edit)
         pane.edit_list.remove(edit)
+        edit.doc.removeReference(self)
         edit.destroy()
 
         # Closeしたあと、次のEditを表示する
@@ -2762,11 +2763,9 @@ class MainWindow( ckit.TextWindow ):
             if not filename : return None
             filename = os.path.abspath(filename)
             filename = ckit.normPath(filename)
-
-        fd = open( filename, "wb" )
-        doc.writeFile(fd)
-        fd.close()
-
+        
+        doc.writeFile(filename)
+        
         doc.filename = filename
 
         doc.clearModified()
@@ -4242,7 +4241,9 @@ class MainWindow( ckit.TextWindow ):
                 pass
             else:
                 return
-
+        
+        # FIXME : オフロード対応が必要
+        
         fd = open( filename, "rb" )
         doc.readFile( fd, encoding[1] )
         fd.close()
@@ -5963,9 +5964,7 @@ class MainWindow( ckit.TextWindow ):
 
         if edit.doc.isModified():
             src_filename = ckit.makeTempFile( "tags.src_", os.path.splitext(src_filename)[1] )
-            fd = open( src_filename, "wb" )
-            edit.doc.writeFile(fd)
-            fd.close()
+            edit.doc.writeFile(src_filename)
 
         tags_filename = ckit.makeTempFile("tags_")
 
