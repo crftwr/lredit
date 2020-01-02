@@ -41,11 +41,14 @@ class commandline_Launcher:
 
             try:
                 path = ckit.joinPath( basedir, directory )
-                unc = os.path.splitunc(path)
-                if unc[0]:
+
+                drive, tail = os.path.splitdrive(path)
+                unc = ( drive.startswith("\\\\") or drive.startswith("//") )
+
+                if unc:
                     lredit_misc.checkNetConnection(path)
-                if unc[0] and not unc[1]:
-                    servername = unc[0].replace('/','\\')
+                if unc and not tail:
+                    servername = drive.replace('/','\\')
                     infolist = lredit_native.enumShare(servername)
                     for info in infolist:
                         if info[1]==0:
@@ -392,11 +395,10 @@ class commandline_Int32Hex:
 ## コマンドライン入力にファイル名を補完候補として提供するクラス
 class candidate_Filename():
 
-    def __init__( self, basedir, fixed_items=[], relative_path=False ):
+    def __init__( self, basedir, fixed_items=[] ):
         
         self.basedir = basedir
         self.fixed_items = fixed_items
-        self.relative_path = relative_path
 
     def __call__( self, update_info ):
         
@@ -423,32 +425,35 @@ class candidate_Filename():
 
         try:
             path = ckit.joinPath( self.basedir, directory )
-            if self.relative_path or os.path.isabs(path):
-                unc = os.path.splitunc(path)
-                if unc[0]:
-                    checkNetConnection(path)
-                if unc[0] and not unc[1]:
-                    servername = unc[0].replace('/','\\')
-                    infolist = lredit_native.enumShare(servername)
-                    for info in infolist:
-                        if info[1]==0:
-                            if info[0].lower().startswith(name_prefix):
-                                if ckit.pathSlash():
-                                    appendCandidate( info[0] + "/" )
-                                else:
-                                    appendCandidate( info[0] + "\\" )
 
-                else:
-                    infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
-                    for info in infolist:
+            drive, tail = os.path.splitdrive(path)
+            unc = ( drive.startswith("\\\\") or drive.startswith("//") )
+
+            if unc:
+                lredit_misc.checkNetConnection(path)
+            if unc and not tail:
+                servername = drive.replace('/','\\')
+                infolist = lredit_native.enumShare(servername)
+                for info in infolist:
+                    if info[1]==0:
                         if info[0].lower().startswith(name_prefix):
-                            if info[3] & ckit.FILE_ATTRIBUTE_DIRECTORY:
-                                if ckit.pathSlash():
-                                    appendCandidate( info[0] + "/" )
-                                else:
-                                    appendCandidate( info[0] + "\\" )
-                            else:                    
-                                appendCandidate( info[0] )
+                            if ckit.pathSlash():
+                                appendCandidate( info[0] + "/" )
+                            else:
+                                appendCandidate( info[0] + "\\" )
+
+            else:
+                infolist = lredit_native.findFile( ckit.joinPath(path,'*'), use_cache=True )
+                for info in infolist:
+                    if info[0].lower().startswith(name_prefix):
+                        if info[3] & ckit.FILE_ATTRIBUTE_DIRECTORY:
+                            if ckit.pathSlash():
+                                appendCandidate( info[0] + "/" )
+                            else:
+                                appendCandidate( info[0] + "\\" )
+                        else:                    
+                            appendCandidate( info[0] )
+
         except Exception as e:
             print( e )
         
