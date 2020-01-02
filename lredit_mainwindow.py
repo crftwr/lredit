@@ -2529,7 +2529,6 @@ class MainWindow( ckit.TextWindow ):
         edit.setDocument(doc)
         self.loadBookmarkList(edit)
     
-        edit.doc.addReference(self)
         edit.selection_changed_handler_list.append( self._onEditSelectionChanged )
 
         edit.configure()
@@ -2716,7 +2715,6 @@ class MainWindow( ckit.TextWindow ):
         pane.edit = None
         self.edit_list.remove(edit)
         pane.edit_list.remove(edit)
-        edit.doc.removeReference(self)
         edit.destroy()
 
         # Closeしたあと、次のEditを表示する
