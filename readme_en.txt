@@ -4,7 +4,7 @@ Author: craftware
 Contact: craftware@gmail.com
 Development Environment: Python + VC2010
 Type: Freeware
-Requirement: Windows XP/Vista/7/8
+Requirement: Windows 10 64bit
 Website: http://sites.google.com/site/craftware/
 
 

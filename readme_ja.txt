@@ -4,7 +4,7 @@
 連絡先: craftware@gmail.com
 開発環境: Python + VC2015
 種別: フリーウェア
-動作環境: Windows XP/Vista/7/8/10
+動作環境: Windows 10 64bit
 Webサイト: http://sites.google.com/site/craftware/
 
 

@@ -2765,7 +2765,8 @@ class MainWindow( ckit.TextWindow ):
             filename = os.path.abspath(filename)
             filename = ckit.normPath(filename)
         
-        doc.writeFile(filename)
+        with open( filename, "wb" ) as fd:
+            doc.writeFile(fd)
         
         doc.filename = filename
 
@@ -5967,7 +5968,8 @@ class MainWindow( ckit.TextWindow ):
 
         if edit.doc.isModified():
             src_filename = ckit.makeTempFile( "tags.src_", os.path.splitext(src_filename)[1] )
-            edit.doc.writeFile(src_filename)
+            with open( src_filename, "wb" ) as fd:
+                edit.doc.writeFile(fd)
 
         tags_filename = ckit.makeTempFile("tags_")
 

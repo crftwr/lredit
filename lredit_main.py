@@ -80,6 +80,8 @@ if 1:
 
 #--------------------------------------------------------------------
 
+ctypes.windll.kernel32.CreateMutexW.restype = ctypes.c_void_p
+
 instance_mutex = ctypes.windll.kernel32.CreateMutexW( 0, 0, "LreditInstanceMutex" )
 instance_exists = ctypes.windll.kernel32.GetLastError()==183 # ERROR_ALREADY_EXISTS
 
