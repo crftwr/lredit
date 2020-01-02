@@ -27,6 +27,6 @@ with open( "large.txt", "w" ) as fd:
             break
         
         if i % 10000 == 0:
-            print( "num lines = %d, file size=%d\n", i, fd.tell() )
+            print( "num lines = %d, file size=%d" % (i, fd.tell()) )
         
         i+=1
