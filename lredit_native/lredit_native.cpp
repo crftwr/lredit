@@ -1,4 +1,4 @@
-#include <shlobj.h>
+ï»¿#include <shlobj.h>
 #include <intshcut.h>
 #include <lm.h>
 
@@ -141,7 +141,7 @@ static PyObject * _findFile(PyObject* self, PyObject* args, PyObject * kwds)
 	
 	if(use_cache)
 	{
-		// ƒLƒƒƒbƒVƒ…‚ðŒŸõ‚·‚é
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ¤œç´¢ã™ã‚‹
 		FindFileCacheList::iterator i;
 		for( i=find_file_cache_list.begin() ; i!=find_file_cache_list.end() ; ++i )
 		{
@@ -153,12 +153,12 @@ static PyObject * _findFile(PyObject* self, PyObject* args, PyObject * kwds)
 			}
 		}
 
-		// ƒLƒƒƒbƒVƒ…‚©‚çŒ©‚Â‚©‚Á‚½		
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰è¦‹ã¤ã‹ã£ãŸ		
 		if(i!=find_file_cache_list.end())
 		{
 			found = true;
 
-			// æ“ª‚É“ü‚ê‘Ö‚¦
+			// å…ˆé ­ã«å…¥ã‚Œæ›¿ãˆ
 			if(i!=find_file_cache_list.begin())
 			{
 				FindFileCache cache = *i;
@@ -216,7 +216,7 @@ static PyObject * _findFile(PyObject* self, PyObject* args, PyObject * kwds)
 		}
 		else if( GetLastError()==ERROR_FILE_NOT_FOUND )
 		{
-			// ƒGƒ‰[‚É‚¹‚¸‹ó‚ÌƒŠƒXƒg‚ð•Ô‚·
+			// ã‚¨ãƒ©ãƒ¼ã«ã›ãšç©ºã®ãƒªã‚¹ãƒˆã‚’è¿”ã™
 			SetLastError(0);
 		}
 		else
@@ -225,20 +225,20 @@ static PyObject * _findFile(PyObject* self, PyObject* args, PyObject * kwds)
 			return NULL;
 		}
 
-		// ƒLƒƒƒbƒVƒ…ƒŠƒXƒg‚Ìæ“ª‚É“o˜^‚·‚é
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒªã‚¹ãƒˆã®å…ˆé ­ã«ç™»éŒ²ã™ã‚‹
 		find_file_cache_list.push_front( FindFileCache( path, ignore_dot!=0, ignore_dotdot!=0, new_info_list ) );
 
-		// ƒLƒƒƒbƒVƒ…ƒŠƒXƒg‚ÌƒTƒCƒY‚ð‚S‚Â‚É§ŒÀ‚·‚é
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒªã‚¹ãƒˆã®ã‚µã‚¤ã‚ºã‚’ï¼”ã¤ã«åˆ¶é™ã™ã‚‹
 		while( find_file_cache_list.size()>4 )
 		{
 			find_file_cache_list.pop_back();
 		}
 	}
 
-	// Python‚ÌList‚É•ÏŠ·‚·‚é
+	// Pythonã®Listã«å¤‰æ›ã™ã‚‹
 	PyObject * pyret = PyList_New(0);
 	{
-		// ƒLƒƒƒbƒVƒ…’†‚Ìæ“ª‚ÌƒAƒCƒeƒ€‚ð•Ô‚·
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ä¸­ã®å…ˆé ­ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’è¿”ã™
 		FindFileCacheInfoList & info_list = find_file_cache_list.begin()->info_list;
 
 		for( FindFileCacheInfoList::iterator i=info_list.begin() ; i!=info_list.end() ; ++i )
@@ -301,7 +301,7 @@ static PyObject * _enumShare(PyObject* self, PyObject* args, PyObject * kwds)
          		/*
             	printf("%-20S%-30S%-8u",p->shi502_netname, p->shi502_path, p->shi502_current_uses);
 
-	            // shi502_security_descriptor ƒƒ“ƒo‚Ì’l‚ª—LŒø‚©‚Ç‚¤‚©ŒŸØ‚·‚éB
+	            // shi502_security_descriptor ãƒ¡ãƒ³ãƒã®å€¤ãŒæœ‰åŠ¹ã‹ã©ã†ã‹æ¤œè¨¼ã™ã‚‹ã€‚
 	            if(IsValidSecurityDescriptor(p->shi502_security_descriptor))
 	            {
 	               	printf("Yes\n");
@@ -312,7 +312,7 @@ static PyObject * _enumShare(PyObject* self, PyObject* args, PyObject * kwds)
 	            }
 	            */
 
-				// ƒŠƒXƒg‚É’Ç‰Á
+				// ãƒªã‚¹ãƒˆã«è¿½åŠ 
 				{
 					PyObject * pyitem = Py_BuildValue(
 						"(uiuiiiuu)",
@@ -334,7 +334,7 @@ static PyObject * _enumShare(PyObject* self, PyObject* args, PyObject * kwds)
 	            p++;
 			}
 
-        	// Š„‚è“–‚ÄÏ‚Ý‚Ìƒoƒbƒtƒ@‚ð‰ð•ú‚·‚éB
+        	// å‰²ã‚Šå½“ã¦æ¸ˆã¿ã®ãƒãƒƒãƒ•ã‚¡ã‚’è§£æ”¾ã™ã‚‹ã€‚
         	NetApiBufferFree(BufPtr);
       	}
       	else
@@ -416,7 +416,7 @@ static PyObject * _setFileTime(PyObject* self, PyObject* args, PyObject * kwds)
     
     if(is_readonly)
     {
-    	// ReadOnly ‘®«‚Ì‚Æ‚«‚Í‚¢‚Á‚½‚ñ‰ðœ‚µ‚È‚¢‚Æƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ªXV‚Å‚«‚È‚¢
+    	// ReadOnly å±žæ€§ã®ã¨ãã¯ã„ã£ãŸã‚“è§£é™¤ã—ãªã„ã¨ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãŒæ›´æ–°ã§ããªã„
 		Py_BEGIN_ALLOW_THREADS
 		SetFileAttributes( path.c_str(), attr & (~FILE_ATTRIBUTE_READONLY) );
 		Py_END_ALLOW_THREADS
@@ -436,7 +436,7 @@ static PyObject * _setFileTime(PyObject* self, PyObject* args, PyObject * kwds)
 
 	    if(is_readonly)
 	    {
-	    	// ReadOnly ‘®«‚ðŒ³‚É–ß‚·
+	    	// ReadOnly å±žæ€§ã‚’å…ƒã«æˆ»ã™
 			Py_BEGIN_ALLOW_THREADS
 			SetFileAttributes( path.c_str(), attr );
 			Py_END_ALLOW_THREADS
@@ -470,7 +470,7 @@ static PyObject * _setFileTime(PyObject* self, PyObject* args, PyObject * kwds)
 
     if(is_readonly)
     {
-    	// ReadOnly ‘®«‚ðŒ³‚É–ß‚·
+    	// ReadOnly å±žæ€§ã‚’å…ƒã«æˆ»ã™
 		Py_BEGIN_ALLOW_THREADS
 		SetFileAttributes( path.c_str(), attr );
 		Py_END_ALLOW_THREADS
@@ -586,8 +586,8 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
 	
 	#if 0
 
-	// ƒGƒNƒXƒvƒ[ƒ‰‚Ìƒrƒ…[‚Ì”wŒi•”•ª‚ÌƒRƒ“ƒeƒLƒXƒgƒƒjƒ…[‚ÌƒeƒXƒg
-	// ‚È‚º‚©A“\‚è•t‚¯A‚ª–³Œø‰»‚³‚ê‚Ä‚¢‚é
+	// ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã®ãƒ“ãƒ¥ãƒ¼ã®èƒŒæ™¯éƒ¨åˆ†ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒ†ã‚¹ãƒˆ
+	// ãªãœã‹ã€è²¼ã‚Šä»˜ã‘ã€ãŒç„¡åŠ¹åŒ–ã•ã‚Œã¦ã„ã‚‹
 	IShellView * pView;
 	pFolder->CreateViewObject( hwnd, IID_IShellView, (LPVOID *)&pView );
 	pView->GetItemObject( SVGIO_BACKGROUND, IID_IContextMenu, (LPVOID *)&lpcm );
@@ -595,9 +595,9 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
 
 	#else
 
-    //IContextMenu‚ðŽæ“¾‚µ‚Ü‚·B
-    //‘æŽOˆø”‚ÉAƒtƒ@ƒCƒ‹‚Ì”
-    //‘æŽlˆø”‚ÉAƒtƒ@ƒCƒ‹‚ÌƒAƒCƒeƒ€‚h‚cƒŠƒXƒg”z—ñ‚ÌƒAƒhƒŒƒX‚ð‚¢‚ê‚Ü‚·B
+    //IContextMenuã‚’å–å¾—ã—ã¾ã™ã€‚
+    //ç¬¬ä¸‰å¼•æ•°ã«ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®æ•°
+    //ç¬¬å››å¼•æ•°ã«ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¢ã‚¤ãƒ†ãƒ ï¼©ï¼¤ãƒªã‚¹ãƒˆé…åˆ—ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ã„ã‚Œã¾ã™ã€‚
     ret = pFolder->GetUIObjectOf(
     	hwnd,
         num,
@@ -647,7 +647,7 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
             {
 				TRACE;
 
-				context_menu_oldWndProc = (WNDPROC)SetWindowLong( hwnd, GWL_WNDPROC, (DWORD)contextMenuWndProc );
+				context_menu_oldWndProc = (WNDPROC)SetWindowLong( hwnd, GWLP_WNDPROC, (DWORD)contextMenuWndProc );
 
                 idCmd = TrackPopupMenu(hMenu, 
                                     TPM_LEFTALIGN | TPM_RETURNCMD | TPM_RIGHTBUTTON, 
@@ -659,7 +659,7 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
 
 				TRACE;
 
-				SetWindowLong( hwnd, GWL_WNDPROC, (DWORD)context_menu_oldWndProc);
+				SetWindowLong( hwnd, GWLP_WNDPROC, (DWORD)context_menu_oldWndProc);
 				context_menu_oldWndProc = NULL;
 
                 if(idCmd)
@@ -744,7 +744,7 @@ static PyObject * _popupContextMenu(PyObject* self, PyObject* args)
 		
 		if(str_directory.empty())
 		{
-			// ƒ}ƒCƒRƒ“ƒsƒ…[ƒ^
+			// ãƒžã‚¤ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿
 			SHGetSpecialFolderLocation( hwnd, CSIDL_DRIVES, &directory_item_id );
 		}
 		else
@@ -832,33 +832,33 @@ static PyObject * _getShellLinkInfo( PyObject * self, PyObject * args )
 
 	if( SUCCEEDED(CoInitialize(NULL)) )
 	{
-        // IShellLink ƒIƒuƒWƒFƒNƒg‚ðì¬‚µƒ|ƒCƒ“ƒ^‚ðŽæ“¾‚·‚é
+        // IShellLink ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹
         hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER,
                                                 IID_IShellLink, (void **)&psl);
         if (SUCCEEDED(hres))
         {
             IPersistFile *ppf;
 
-            // IPersistFile ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì–â‚¢‡‚í‚¹‚ð‚¨‚±‚È‚¤
+            // IPersistFile ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å•ã„åˆã‚ã›ã‚’ãŠã“ãªã†
             hres = psl->QueryInterface(IID_IPersistFile, (void **)&ppf);
             if (SUCCEEDED(hres))
             {
-                // ƒVƒ‡[ƒgƒJƒbƒg‚ðƒ[ƒh‚·‚é
+                // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
                 hres = ppf->Load( lnk.c_str(), STGM_READ );
 
                 if (SUCCEEDED(hres))
                 {
-                    // ƒŠƒ“ƒNæ‚ðŽæ“¾‚·‚é
+                    // ãƒªãƒ³ã‚¯å…ˆã‚’å–å¾—ã™ã‚‹
                     psl->GetPath( file, MAX_PATH, &wfd, SLGP_UNCPRIORITY );
     				psl->GetArguments( param, MAX_PATH );
     				psl->GetWorkingDirectory( directory, MAX_PATH );
     				psl->GetShowCmd( &swmode );
                 }
 
-                // IPersistFile ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŠJ•ú‚·‚é
+                // IPersistFile ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’é–‹æ”¾ã™ã‚‹
                 ppf->Release();
             }
-            // IShellLink‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŠJ•ú‚·‚é
+            // IShellLinkã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’é–‹æ”¾ã™ã‚‹
             psl->Release();
         }
 
@@ -894,23 +894,23 @@ static PyObject * _getInternetShortcutInfo( PyObject * self, PyObject * args )
 
 	if( SUCCEEDED(CoInitialize(NULL)) )
 	{
-        // IUniformResourceLocator ƒIƒuƒWƒFƒNƒg‚ðì¬‚µƒ|ƒCƒ“ƒ^‚ðŽæ“¾‚·‚é
+        // IUniformResourceLocator ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹
         hres = CoCreateInstance(CLSID_InternetShortcut, NULL, CLSCTX_INPROC_SERVER,
                                                 IID_IUniformResourceLocator, (void **)&psl);
         if (SUCCEEDED(hres))
         {
             IPersistFile *ppf;
 
-            // IPersistFile ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì–â‚¢‡‚í‚¹‚ð‚¨‚±‚È‚¤
+            // IPersistFile ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å•ã„åˆã‚ã›ã‚’ãŠã“ãªã†
             hres = psl->QueryInterface(IID_IPersistFile, (void **)&ppf);
             if (SUCCEEDED(hres))
             {
-                // ƒVƒ‡[ƒgƒJƒbƒg‚ðƒ[ƒh‚·‚é
+                // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
                 hres = ppf->Load( lnk.c_str(), STGM_READ );
 
                 if (SUCCEEDED(hres))
                 {
-                    // ƒŠƒ“ƒNæ‚ðŽæ“¾‚·‚é
+                    // ãƒªãƒ³ã‚¯å…ˆã‚’å–å¾—ã™ã‚‹
 					wchar_t * p;
                     hres = psl->GetURL( &p );
 					if (SUCCEEDED(hres))
@@ -926,10 +926,10 @@ static PyObject * _getInternetShortcutInfo( PyObject * self, PyObject * args )
 					}
                 }
 
-                // IPersistFile ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŠJ•ú‚·‚é
+                // IPersistFile ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’é–‹æ”¾ã™ã‚‹
                 ppf->Release();
             }
-            // IUniformResourceLocator‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŠJ•ú‚·‚é
+            // IUniformResourceLocatorã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’é–‹æ”¾ã™ã‚‹
             psl->Release();
         }
 
