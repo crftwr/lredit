@@ -647,7 +647,7 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
             {
 				TRACE;
 
-				context_menu_oldWndProc = (WNDPROC)SetWindowLong( hwnd, GWLP_WNDPROC, (DWORD)contextMenuWndProc );
+				context_menu_oldWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)contextMenuWndProc);
 
                 idCmd = TrackPopupMenu(hMenu, 
                                     TPM_LEFTALIGN | TPM_RETURNCMD | TPM_RIGHTBUTTON, 
@@ -659,7 +659,7 @@ bool doContextMenu( HWND hwnd, int x, int y, LPSHELLFOLDER pFolder, LPITEMIDLIST
 
 				TRACE;
 
-				SetWindowLong( hwnd, GWLP_WNDPROC, (DWORD)context_menu_oldWndProc);
+				SetWindowLongPtr( hwnd, GWLP_WNDPROC, (LONG_PTR)context_menu_oldWndProc);
 				context_menu_oldWndProc = NULL;
 
                 if(idCmd)
@@ -760,7 +760,7 @@ static PyObject * _popupContextMenu(PyObject* self, PyObject* args)
 		
 	    Py_END_ALLOW_THREADS
 	
-		int file_num = PySequence_Length(file_list);
+		int file_num = (int)PySequence_Length(file_list);
 
 		LPITEMIDLIST * item_id_list = new LPITEMIDLIST[file_num];
 
@@ -970,7 +970,7 @@ static PyObject * _chooseColor( PyObject * self, PyObject * args )
 	COLORREF color_table[16] = {0};
 	if( PySequence_Check(py_color_table) )
 	{
-		int item_num = PySequence_Length(py_color_table);
+		int item_num = (int)PySequence_Length(py_color_table);
 		for( int i=0 ; i<item_num && i<16 ; i++ )
 		{
 			PyObject * item = PySequence_GetItem( py_color_table, i );
@@ -1110,7 +1110,7 @@ static PyModuleDef redit_native_module =
 	NULL, NULL, NULL, NULL
 };
 
-extern "C" PyMODINIT_FUNC PyInit_lredit_native(void)
+PyMODINIT_FUNC PyInit_lredit_native(void)
 {
 	CoInitialize(NULL);
 	OleInitialize(NULL);
