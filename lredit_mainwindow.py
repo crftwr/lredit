@@ -225,14 +225,22 @@ class MainWindow( ckit.TextWindow ):
 
         self.title = ""
 
+        x = self.ini.getint( "GEOMETRY", "x" )
+        y = self.ini.getint( "GEOMETRY", "y" )
+        
+        # ウインドウの左上位置のDPIによってをフォントサイズ決定する
+        dpi_scale = ckit.TextWindow.getDisplayScalingFromPosition( x, y )
+        font_size = self.ini.getint( "FONT", "size" )
+        font_size = int( font_size * dpi_scale )
+
         ckit.TextWindow.__init__(
             self,
-            x=self.ini.getint( "GEOMETRY", "x" ),
-            y=self.ini.getint( "GEOMETRY", "y" ),
+            x=x,
+            y=y,
             width=self.ini.getint( "GEOMETRY", "width" ),
             height=self.ini.getint( "GEOMETRY", "height" ),
             font_name = self.ini.get( "FONT", "name" ),
-            font_size = self.ini.getint( "FONT", "size" ),
+            font_size = font_size,
             bg_color = ckit.getColor("bg"),
             cursor0_color = ckit.getColor("cursor0"),
             cursor1_color = ckit.getColor("cursor1"),
@@ -246,6 +254,7 @@ class MainWindow( ckit.TextWindow ):
             close_handler = self._onClose,
             move_handler = self._onMove,
             size_handler = self._onSize,
+            dpi_handler = self._onDpi,
             keydown_handler = self._onKeyDown,
             keyup_handler = self._onKeyUp,
             char_handler = self._onChar,
@@ -261,6 +270,11 @@ class MainWindow( ckit.TextWindow ):
             dropfiles_handler = self._onDropFiles,
             ipc_handler = self._onIpc,
             )
+
+        # モニター境界付近でウインドウが作成された場合を考慮して、DPIを再確認する
+        dpi_scale2 = self.getDisplayScaling()
+        if dpi_scale2 != dpi_scale:
+            self.updateFont()
 
         self.messageloop_list = []
         self.quit_request_list = []
@@ -1355,6 +1369,25 @@ class MainWindow( ckit.TextWindow ):
             self.wallpaper.adjust()
 
         self.paint()
+
+    def updateFont(self):
+        
+        scale = self.getDisplayScaling()
+        
+        font_name = self.ini.get("FONT","name")
+        font_size = self.ini.getint( "FONT", "size" )
+        font_size = int( font_size * scale )
+
+        self.setFont( font_name, font_size )
+
+        original_width = self.width()
+        original_height = self.height()
+
+        window_rect = self.getWindowRect()
+        self.setPosSize( (window_rect[0] + window_rect[2]) // 2, window_rect[1], original_width, original_height, ORIGIN_X_CENTER | ORIGIN_Y_TOP )
+
+    def _onDpi( self, scale ):
+        self.updateFont()
 
     def _onKeyDown( self, vk, mod ):
 

@@ -57,10 +57,8 @@ def _configFontName( main_window ):
     if select<0 : return
 
     main_window.ini.set( "FONT", "name", font_list[select] )
-
-    main_window.setFont( main_window.ini.get("FONT","name"), main_window.ini.getint( "FONT", "size" ) )
-    window_rect = main_window.getWindowRect()
-    main_window.setPosSize( window_rect[0], window_rect[1], main_window.width(), main_window.height(), 0 )
+    
+    main_window.updateFont()
 
 def _configFontSize( main_window ):
 
@@ -80,9 +78,7 @@ def _configFontSize( main_window ):
 
     main_window.ini.set( "FONT", "size", size_list[select] )
 
-    main_window.setFont( main_window.ini.get("FONT","name"), main_window.ini.getint( "FONT", "size" ) )
-    window_rect = main_window.getWindowRect()
-    main_window.setPosSize( window_rect[0], window_rect[1], main_window.width(), main_window.height(), 0 )
+    main_window.updateFont()
 
 def _configMenuBar( main_window ):
 
