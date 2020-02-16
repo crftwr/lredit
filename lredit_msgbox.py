@@ -1,6 +1,4 @@
-﻿import traceback
-
-import ckit
+﻿import ckit
 from ckit.ckit_const import *
 
 import lredit_resource

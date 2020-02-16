@@ -1,6 +1,5 @@
 ﻿import sys
 import os
-import traceback
 
 import ckit
 from ckit.ckit_const import *

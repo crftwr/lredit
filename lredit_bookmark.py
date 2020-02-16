@@ -1,6 +1,7 @@
 ﻿import os
 import json
-
+import configparser
+import traceback
 
 ## @addtogroup bookmark
 ## @{
@@ -52,7 +53,7 @@ class BookmarkTable:
             if bookmark_list:
                 item = [ filename, bookmark_list ]
                 self.table.append(item)
-                self.table.sort( key = lambda item: item[0] )
+                self.table.sort()
 
     ## テキストファイルのブックマークを１つ格納する
     def setBookmark( self, filename, bookmark ):
@@ -82,9 +83,7 @@ class BookmarkTable:
             if bookmark[1]:
                 item = [ filename, [ bookmark ] ]
                 self.table.append(item)
-                def compare( item1, item2 ):
-                    return cmp( item1[0], item2[1] )
-                self.table.sort( compare )
+                self.table.sort()
 
     ## テキストファイル１つのブックマークのリストを取得する
     def getBookmarkList( self, filename ):
@@ -119,7 +118,10 @@ class BookmarkTable:
                 value = ini.get( section, "%s_%d"%(prefix,i) )
                 filename, lineno, color, display_text = json.loads(value)
                 self.setBookmark( filename, (lineno, color, display_text) )
+            except configparser.NoOptionError:
+                break
             except:
+                traceback.print_exc()
                 break
 
 ## @} bookmark
