@@ -231,7 +231,7 @@ class MainWindow( ckit.TextWindow ):
         # ウインドウの左上位置のDPIによってをフォントサイズ決定する
         dpi_scale = ckit.TextWindow.getDisplayScalingFromPosition( x, y )
         font_size = self.ini.getint( "FONT", "size" )
-        font_size = int( font_size * dpi_scale )
+        font_size = round( font_size * dpi_scale )
 
         ckit.TextWindow.__init__(
             self,
@@ -1376,7 +1376,7 @@ class MainWindow( ckit.TextWindow ):
         
         font_name = self.ini.get("FONT","name")
         font_size = self.ini.getint( "FONT", "size" )
-        font_size = int( font_size * scale )
+        font_size = round( font_size * scale )
 
         self.setFont( font_name, font_size )
 
