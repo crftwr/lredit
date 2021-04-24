@@ -4176,6 +4176,27 @@ class MainWindow( ckit.TextWindow ):
         # カーソル位置の再設定
         self.activePane().widget().paint()
 
+    ## フォントサイズを変更する
+    def command_FontSize( self, info ):
+        if len(info.args) >= 1:
+            try:
+                size = int( info.args[0] )
+            except ValueError as e:
+                print("ERROR : invalid font size")
+                return
+        else:
+            size = self.ini.getint( "FONT", "size" )
+            size = self.inputString( u"Size", str(size), [] )
+            try:
+                size = int(size)
+            except ValueError as e:
+                print("ERROR : invalid font size")
+                return
+
+        self.ini.set("FONT","size",size)
+        
+        self.updateFont()
+    
     ## 引数に渡された画像ファイルを壁紙にする
     def command_Wallpaper( self, info ):
 

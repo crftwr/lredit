@@ -2,7 +2,7 @@
 
 lredit_appname = "LREdit"
 lredit_dirname = "LREdit"
-lredit_version = "1.82"
+lredit_version = "1.83"
 
 _startup_string_fmt = """\
 %s version %s:

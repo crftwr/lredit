@@ -2,6 +2,12 @@
 更新履歴
 =========
 
+    1.83
+
+        - Windows 10 May 2020 Update 以降の IME 動作の非互換性に起因する操作不能バグを修正。(https://github.com/crftwr/cfiler/issues/56)
+
+        - フォントサイズを変更するコマンド FontSize を追加
+
     1.82
 
         - トラックパッドを使ったスクロールを滑らかにした。
